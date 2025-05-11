@@ -111,8 +111,50 @@ function formatTestName(id: string): string {
   return formattedName;
 }
 
+// Format answer text for display, handling special cases
+function formatAnswer(answer: any): string {
+  // Handle null, undefined, or empty values
+  if (answer === null || answer === undefined) return "";
+  
+  // Convert numbers to strings
+  if (typeof answer === 'number') {
+    return answer.toString();
+  }
+  
+  // For arrays (multiple correct options)
+  if (Array.isArray(answer)) {
+    return answer.map(item => formatAnswer(item)).join(" / ");
+  }
+  
+  // Ensure answer is treated as a string from this point on
+  const answerStr = String(answer);
+  if (!answerStr) return "";
+  
+  // Handle multiple acceptable answers separated by OR or slash
+  if (answerStr.includes(" OR ") || answerStr.includes("/")) {
+    return answerStr.replace(" OR ", " / ");
+  }
+  
+  // Handle answers that should be all caps (usually letters for MCQs)
+  if (/^[A-Z\s]+$/.test(answerStr) && answerStr.length <= 3) {
+    return answerStr;
+  }
+  
+  // Handle answers with commas (which might be multiple acceptable answers)
+  if (answerStr.includes(",")) {
+    return answerStr.split(",").map(a => a.trim()).join(" / ");
+  }
+  
+  // For longer answers, ensure proper capitalization
+  if (answerStr.length > 0 && !/^\d+(\.\d+)?$/.test(answerStr)) {
+    return answerStr.charAt(0).toUpperCase() + answerStr.slice(1).toLowerCase();
+  }
+  
+  return answerStr;
+}
+
 // Format the answers display
-function AnswersDisplay({ answers }: { answers?: Record<number, string> }) {
+function AnswersDisplay({ answers, testType }: { answers?: Record<number, string>, testType?: string }) {
   if (!answers) {
     return <p>No answers available for this test.</p>;
   }
@@ -124,10 +166,23 @@ function AnswersDisplay({ answers }: { answers?: Record<number, string> }) {
     const questionNum = parseInt(question);
     let section = "Section 1";
 
-    if (questionNum > 14 && questionNum <= 27) {
-      section = "Section 2";
-    } else if (questionNum > 27) {
-      section = "Section 3";
+    // Different section grouping for listening vs reading tests
+    if (testType === "listening") {
+      // Listening tests typically have 4 sections with 10 questions each
+      if (questionNum > 10 && questionNum <= 20) {
+        section = "Section 2";
+      } else if (questionNum > 20 && questionNum <= 30) {
+        section = "Section 3";
+      } else if (questionNum > 30) {
+        section = "Section 4";
+      }
+    } else {
+      // Reading tests typically have 3 sections
+      if (questionNum > 14 && questionNum <= 27) {
+        section = "Section 2";
+      } else if (questionNum > 27) {
+        section = "Section 3";
+      }
     }
 
     if (!groupedAnswers[section]) {
@@ -140,17 +195,19 @@ function AnswersDisplay({ answers }: { answers?: Record<number, string> }) {
     <div className="space-y-6">
       {Object.entries(groupedAnswers).map(([section, sectionAnswers]) => (
         <div key={section} className="bg-white rounded-lg shadow-sm border p-5">
-          <h3 className="text-lg font-medium mb-3">{section}</h3>
+          <h3 className="text-lg font-medium mb-3">{section}</h3>          
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-            {Object.entries(sectionAnswers).map(([question, answer]) => (
-              <div
-                key={question}
-                className="flex justify-between items-center bg-gray-50 p-3 rounded border"
-              >
-                <span className="font-medium mr-2">{question}:</span>
-                <span className="font-mono">{answer}</span>
-              </div>
-            ))}
+            {Object.entries(sectionAnswers)
+              .sort((a, b) => parseInt(a[0]) - parseInt(b[0]))
+              .map(([question, answer]) => (
+                <div
+                  key={question}
+                  className="flex justify-between items-center bg-gray-50 p-3 rounded border"
+                >                
+                  <span className="font-medium mr-2">{question}:</span>
+                  <span className="font-mono text-sm md:text-base break-words max-w-[60%] text-right">{formatAnswer(answer)}</span>
+                </div>
+              ))}
           </div>
         </div>
       ))}
@@ -158,15 +215,13 @@ function AnswersDisplay({ answers }: { answers?: Record<number, string> }) {
   );
 }
 
-// Main component - using await for params
-export default async function TestPage({
-  params,
-}: {
-  params: { id: string; type: string };
+// Main component with properly typed params
+export default async function TestPage(params: {
+  params: Promise<{ id: string; type: string }>;
 }) {
   try {
-    // Properly await the params before destructuring
-    const { id, type } = await params;
+    // Await params to access properties
+    const { id, type } = await params.params;
 
     // Get the test data directly
     const testData = await getTestData(id);
@@ -216,8 +271,34 @@ export default async function TestPage({
                   dangerouslySetInnerHTML={{
                     __html: testData.questions as string,
                   }}
-                ></div>
-              </div>
+                ></div>              </div>
+            </div>
+
+            {/* Answer section for listening test */}
+            <div className="mt-10 w-full p-4 relative">
+              <Tabs defaultValue="hidden" className="w-full">
+                <TabsList className="mb-4 w-full flex justify-center">
+                  <TabsTrigger value="hidden" className="px-8">
+                    Hide Answers
+                  </TabsTrigger>
+                  <TabsTrigger value="answers" className="px-8">
+                    Show Answers
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="answers">
+                  <div className="p-5 bg-white rounded-lg shadow-sm border">
+                    <h2 className="text-xl font-medium mb-6">Answer Key</h2>
+                    <AnswersDisplay answers={testData.answers} testType="listening" />
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="hidden">
+                  <div className="text-center p-5">
+                    <p className="text-gray-500">Complete the test before checking answers</p>
+                  </div>
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </div>
@@ -270,10 +351,8 @@ export default async function TestPage({
               <div className="questions-container p-5 bg-white rounded-lg shadow-sm border">
                 {testData.questions}
               </div>
-            </TabsContent>
-
-            <TabsContent value="answers" className="prose max-w-none">
-              <AnswersDisplay answers={testData.answers} />
+            </TabsContent>            <TabsContent value="answers" className="prose max-w-none">
+              <AnswersDisplay answers={testData.answers} testType={type} />
             </TabsContent>
           </Tabs>
         </div>
@@ -310,12 +389,10 @@ export default async function TestPage({
                   </div>
                 </div>
               </div>
-            </TabsContent>
-
-            <TabsContent value="answers">
+            </TabsContent>            <TabsContent value="answers">
               <div className="p-5 bg-white rounded-lg shadow-sm border">
                 <h2 className="text-xl font-medium mb-6">Answer Key</h2>
-                <AnswersDisplay answers={testData.answers} />
+                <AnswersDisplay answers={testData.answers} testType={type} />
               </div>
             </TabsContent>
           </Tabs>
@@ -329,16 +406,16 @@ export default async function TestPage({
 }
 
 // Generate metadata for the page
-export async function generateMetadata(props: {
-  params: { id: string; type: string };
+export async function generateMetadata(params: {
+  params: Promise<{ id: string; type: string }>;
 }) {
   try {
     const defaultTitle = "IELTS Practice Test | IELTS 7+";
     const defaultDescription =
       "Practice IELTS test with comprehensive materials";
 
-    // Properly await the params before destructuring
-    const { id, type } = await props.params;
+    // Await params to access properties
+    const { id, type } = await params.params;
 
     // Prepare a basic title
     let title = id
