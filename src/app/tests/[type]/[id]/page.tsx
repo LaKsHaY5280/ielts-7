@@ -65,17 +65,17 @@ async function getTestData(id: string): Promise<TestContent> {
         questions: data[questionKey],
         answers: data[answerKey] || {},
       };
+    } // For other test types, load dynamically using the test registry
+    const { getTestById } = await import("@/data/tests/testRegistry");
+
+    try {
+      // Get test with dynamic import - will only load the required test
+      return await getTestById(id);
+    } catch (error) {
+      throw new Error(
+        `Test data for ${id} not found: ${(error as Error).message}`
+      );
     }
-
-    // For other test types, import from the index file
-    const { AllTests } = await import("@/data/tests");
-
-    // Check if the test exists in the collection
-    if (!AllTests[id as keyof typeof AllTests]) {
-      throw new Error(`Test data for ${id} not found in AllTests collection`);
-    }
-
-    return AllTests[id as keyof typeof AllTests];
   } catch (error) {
     console.error(`Failed to get test data for ${id}:`, error);
     throw error;
