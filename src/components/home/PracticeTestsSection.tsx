@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
@@ -30,6 +30,23 @@ const PracticeTestsSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const sectionRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(sectionRef, { once: false, margin: "-100px 0px" });
+  // Handle URL query params for direct test type selection
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const typeParam = params.get("type");
+
+      if (
+        typeParam === "general_reading" ||
+        typeParam === "academic_reading" ||
+        typeParam === "listening"
+      ) {
+        setCurrentType(typeParam as TestType);
+        setLoading(true);
+        setTimeout(() => setLoading(false), 300);
+      }
+    }
+  }, []);
 
   const getTypeDetails = (type: TestType): TypeDetails => {
     switch (type) {
@@ -119,7 +136,7 @@ const PracticeTestsSection = () => {
   return (
     <section
       id="practice-tests"
-      className="py-28 relative bg-gradient-to-b from-white to-gray-50/60"
+      className="py-28 relative bg-gradient-to-b from-white to-gray-50"
       ref={sectionRef}
     >
       {/* Background decorative elements */}
@@ -374,11 +391,11 @@ const PracticeTestsSection = () => {
                       <div className="p-6">
                         <div className="flex justify-between items-start mb-4">
                           <div>
-                            <div className="flex items-center gap-1.5 mb-3">
+                            {/* <div className="flex items-center gap-1.5 mb-3">
                               <span className="text-xs font-medium px-2.5 py-0.5 rounded-full bg-primary/10 text-primary">
                                 {testYear}
                               </span>
-                            </div>
+                            </div> */}
                             <h3 className="font-medium text-gray-900 group-hover:text-primary transition-colors">
                               {test.title}
                             </h3>

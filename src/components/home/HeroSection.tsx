@@ -18,62 +18,7 @@ import {
   TrendingUp,
   Sparkles,
 } from "lucide-react";
-
-// Particle animation for background effects - Only rendered on client
-const Particles = () => {
-  const [particles, setParticles] = useState<
-    Array<{
-      id: number;
-      size: number;
-      duration: number;
-      delay: number;
-      initialX: number;
-      initialY: number;
-    }>
-  >([]);
-
-  // Generate particles only on client-side
-  useEffect(() => {
-    const generatedParticles = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      size: Math.random() * 6 + 2,
-      duration: Math.random() * 20 + 10,
-      delay: Math.random() * 5,
-      initialX: Math.random() * 100,
-      initialY: Math.random() * 100,
-    }));
-
-    setParticles(generatedParticles);
-  }, []);
-
-  return (
-    <>
-      {particles.map((particle) => (
-        <motion.div
-          key={particle.id}
-          className="absolute rounded-full bg-primary/10"
-          style={{
-            width: particle.size,
-            height: particle.size,
-            left: `${particle.initialX}%`,
-            top: `${particle.initialY}%`,
-          }}
-          animate={{
-            y: [0, -100],
-            x: [0, Math.random() * 50 - 25],
-            opacity: [0, 0.7, 0],
-          }}
-          transition={{
-            duration: particle.duration,
-            repeat: Infinity,
-            delay: particle.delay,
-            ease: "linear",
-          }}
-        />
-      ))}
-    </>
-  );
-};
+import { HeroBackgroundAnimation } from "./hero-background";
 
 const HeroSection = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -97,9 +42,7 @@ const HeroSection = () => {
       setActiveIndex((prev) => (prev + 1) % 4);
     }, 3000);
     return () => clearInterval(interval);
-  }, []);
-
-  // IELTS skills data with enhanced visuals and descriptions
+  }, []); // IELTS skills data with enhanced visuals and descriptions
   const skillsData = [
     {
       icon: BookOpen,
@@ -109,6 +52,7 @@ const HeroSection = () => {
       textColor: "text-rose-600",
       borderColor: "border-rose-200",
       description: "Master complex texts and improve comprehension speed",
+      href: "/?section=practice-tests&type=general_reading",
     },
     {
       icon: PenTool,
@@ -118,6 +62,7 @@ const HeroSection = () => {
       textColor: "text-violet-600",
       borderColor: "border-violet-200",
       description: "Develop clear, coherent essays and reports",
+      href: "/resources#essays",
     },
     {
       icon: Headphones,
@@ -127,6 +72,7 @@ const HeroSection = () => {
       textColor: "text-blue-600",
       borderColor: "border-blue-200",
       description: "Understand diverse accents and complex discussions",
+      href: "/?section=practice-tests&type=listening",
     },
     {
       icon: MessageCircle,
@@ -136,6 +82,7 @@ const HeroSection = () => {
       textColor: "text-emerald-600",
       borderColor: "border-emerald-200",
       description: "Express yourself fluently and confidently",
+      href: "#",
     },
   ];
 
@@ -178,49 +125,9 @@ const HeroSection = () => {
       className="relative pt-36 pb-28 overflow-hidden"
       ref={containerRef}
     >
-      {/* Enhanced background effects */}
-      <div className="absolute inset-0 -z-10">
-        {/* {mounted && <Particles />} */}
-        <motion.div
-          className="absolute top-20 right-10 w-96 h-96 bg-gradient-to-bl from-primary/10 to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.1, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        />
-        <motion.div
-          className="absolute -bottom-20 -left-20 w-96 h-96 bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.2, 0.4, 0.2],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            repeatType: "reverse",
-            delay: 1,
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-1/3 w-64 h-64 bg-gradient-to-r from-violet-500/5 to-transparent rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.2, 0.3, 0.2],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            repeatType: "reverse",
-            delay: 2,
-          }}
-        />
-      </div>
-
+      {" "}
+      {/* Custom Hero Background Animation with interactive effect */}
+      <HeroBackgroundAnimation interactive={mounted} />
       <div className="container mx-auto max-w-6xl px-6 relative">
         <motion.div
           variants={containerVariants}
@@ -451,21 +358,22 @@ const HeroSection = () => {
                         />
                       ))}
                     </div>
-                  </div>
-
+                  </div>{" "}
                   {/* Skills grid with enhanced animations */}
                   <div className="grid grid-cols-2 gap-4 mt-6">
                     {skillsData.map((skill, i) => {
                       const SkillIcon = skill.icon;
                       return (
-                        <motion.div
+                        <motion.a
+                          href={skill.href}
                           key={i}
-                          className={`flex items-center gap-3 p-4 rounded-xl ${skill.lightColor} border ${skill.borderColor} transition-all duration-300`}
+                          className={`flex items-center gap-3 p-4 rounded-xl ${skill.lightColor} border ${skill.borderColor} transition-all duration-300 cursor-pointer group`}
                           whileHover={{
                             y: -4,
                             boxShadow:
                               "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
                           }}
+                          whileTap={{ scale: 0.98 }}
                           animate={{
                             scale: activeIndex === i ? [1, 1.03, 1] : 1,
                             borderColor:
@@ -482,12 +390,14 @@ const HeroSection = () => {
                           }}
                         >
                           <div
-                            className={`p-2 rounded-lg ${skill.textColor} bg-white/80`}
+                            className={`p-2 rounded-lg ${skill.textColor} bg-white/80 group-hover:bg-white/100`}
                           >
                             <SkillIcon className="w-5 h-5" />
                           </div>
-                          <span className="font-medium">{skill.title}</span>
-                        </motion.div>
+                          <span className="font-medium group-hover:text-gray-900">
+                            {skill.title}
+                          </span>
+                        </motion.a>
                       );
                     })}
                   </div>
@@ -523,18 +433,6 @@ const HeroSection = () => {
             </div>
           </motion.div>
         </motion.div>
-      </div>
-
-      {/* Bottom wave effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 overflow-hidden">
-        <svg
-          viewBox="0 0 1200 120"
-          preserveAspectRatio="none"
-          className="absolute bottom-0 left-0 w-full h-full"
-          fill="rgba(249, 250, 251, 0.8)"
-        >
-          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.11,141.89,111.27,221.93,101.3,286.36,93.06,275.65,62.23,321.39,56.44Z"></path>
-        </svg>
       </div>
     </section>
   );

@@ -181,7 +181,6 @@ For immigration to the UK, employment-related reasons constituted the largest se
 Regarding emigration patterns, employment was even more prominent, with 45% of people leaving the UK for work-related reasons, possibly seeking better career prospects abroad. Family considerations were the second most common motivation (29%), considerably higher than for immigration. Notably, education represented a much smaller factor for emigration (15%) compared to immigration, indicating that fewer UK residents left to study abroad than foreigners came to study in the UK. The remaining 11% departed for various other reasons.<br/><br/>
 
 When comparing the two charts, the most striking contrast is between education's role in migration flows: it was a major factor drawing people to the UK (35%) but much less significant (15%) for those departing. Conversely, family reasons were more important for emigrants (29%) than for immigrants (19%), suggesting stronger family-based motivations for UK residents moving overseas than for foreigners coming to Britain.`,
-    image: "/essay-4.png",
     category: "writing",
     date: "2024-03-28",
   },
@@ -246,7 +245,6 @@ The cement production process begins with two primary raw materials: limestone a
 The concrete manufacturing process involves combining the previously produced cement with three additional materials: sand, gravel, and water. These four ingredients are measured in precise amounts and placed into a concrete mixer. The mixer rotates to thoroughly blend all components into a uniform concrete mixture. Once properly mixed, the concrete is ready to be transported to construction sites where it can be used for various building applications, such as foundations, walls, and structural elements.<br/><br/>
 
 It is notable that the entire process follows a logical sequence from raw materials to finished product, with cement production serving as an intermediate step in the overall concrete manufacturing procedure. The diagram clearly illustrates how basic natural resources are transformed through mechanical and thermal processes into sophisticated building materials essential for modern construction.`,
-    image: "/essay-5.png",
     category: "writing",
     date: "2024-04-28",
   },
@@ -280,6 +278,38 @@ Financial market instability can emerge when large segments of the population ma
 In conclusion, the lack of financial education among young graduates stems from curriculum priorities, teacher preparedness issues, and misplaced assumptions about where such knowledge should be acquired. The resulting impacts include personal financial hardship, increased vulnerability to exploitation, and broader societal and economic challenges. Addressing this educational gap requires comprehensive approaches that integrate financial literacy throughout educational curricula, enhance teacher training, and recognize money management as a core competency rather than an optional skill.`,
     category: "writing",
     date: "2024-05-01",
+  },
+  {
+    id: 13,
+    title: "IELTS Process Diagram - Australian Rainwater System",
+    content:
+      "The diagram illustrates how an Australian town processes rainwater to use as drinking water.",
+    fullContent: `<strong>The diagram illustrates how an Australian town processes rainwater to use as drinking water.</strong><br/><br/>
+
+Overall, rainwater is collected from houses and then passes through a filter into storage where it is then treated with chemicals to make it fit for human consumption.<br/><br/>
+
+Initially, the rain which falls on the rooftop is collected by the gutter and then runs down the pipe at the side of the house into the drain at the bottom. Each house collects rainwater in this way and the rainwater is then passed along underground drains to the water filter.<br/><br/>
+
+The rainwater passes through the water filter to remove any impurities. Once it has been filtered, it continues along the pipes to a storage tank. From this point, the water goes from storage to the water treatment. At this stage of the process, the water is treated with chemicals in order to make it fit for consumption. When the water is ready for drinking, it travels along pipes that lead back into the houses in the town where people can use the water for daily consumption.`,
+    image: "/essay-4.png",
+    category: "writing",
+    date: "2024-05-17",
+  },
+  {
+    id: 14,
+    title: "IELTS Line Graph & Bar Chart Model Answer",
+    content:
+      "The line graph illustrates the number of UK residents going abroad from the UK and overseas residents visiting the UK between 1979 and 1999.",
+    fullContent: `<strong>The line graph illustrates the number of UK residents going abroad from the UK and overseas residents visiting the UK between 1979 and 1999. The bar chart gives information about how many UK residents travelled to five of the most popular countries in 1999. Units are measured in millions of people.</strong><br/><br/>
+
+Overall, there was an increase in the number of visits to and from the UK and there were more visits abroad by UK residents than visits to the UK by overseas residents over the period given. Furthermore, the most popular country to visit by UK residents was France in 1999.<br/><br/>
+
+According to the line graph, the number of UK residents visiting overseas began at just under 15 million in 1979 and rose significantly to reach over 50 million in 1999. Around 10 million overseas residents visited the UK in the first year before climbing steadily to just under 30 million by the final year.<br/><br/>
+
+Regarding the bar chart, in 1999, the two most popular countries were France and Spain (visited by 10 million UK residents and approximately 9 million respectively). The USA and Greece had about 4 million and 3 million visitors. The least popular country visited was Turkey, which had only about 2 million UK residents going there.`,
+    image: "/essay-5.png",
+    category: "writing",
+    date: "2024-05-17",
   },
 ];
 

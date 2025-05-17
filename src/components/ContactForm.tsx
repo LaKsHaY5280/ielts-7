@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Send,
   XCircle,
@@ -9,12 +9,16 @@ import {
   Clock,
   AlertTriangle,
   BadgeCheck,
+  Loader2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const ContactForm = () => {
   const [result, setResult] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRazorpayLoading, setIsRazorpayLoading] = useState(true);
+  const razorpayInitialized = useRef(false);
+  const [scriptError, setScriptError] = useState(false);
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -22,31 +26,6 @@ const ContactForm = () => {
     notes: "",
     paymentId: "",
   });
-
-  // Initialize Razorpay payment button
-  useEffect(() => {
-    const rzpPaymentForm = document.getElementById("rzp_payment_form");
-    if (rzpPaymentForm && !rzpPaymentForm.hasChildNodes()) {
-      const script = document.createElement("script");
-      script.src = "https://checkout.razorpay.com/v1/payment-button.js";
-      script.async = true;
-      script.dataset.payment_button_id = "pl_Q4EpGUzUpirMWJ";
-      rzpPaymentForm.appendChild(script);
-
-      // Check if button rendered properly
-      setTimeout(() => {
-        const button = rzpPaymentForm.querySelector(".razorpay-payment-button");
-        if (!button) {
-          console.warn("Razorpay button did not render properly");
-          const fallbackContainer =
-            document.getElementById("razorpay-fallback");
-          if (fallbackContainer) {
-            fallbackContainer.style.display = "block";
-          }
-        }
-      }, 3000);
-    }
-  }, []);
 
   // Handle form input changes
   const handleInputChange = (
@@ -62,7 +41,146 @@ const ContactForm = () => {
   // Validate payment ID format
   const validatePaymentId = (paymentId: string): boolean => {
     return paymentId.trim().startsWith("pay_") && paymentId.trim().length > 10;
-  };
+  }; // Override alert function to prevent Razorpay alerts
+  useEffect(() => {
+    // Save the original alert function
+    const originalAlert = window.alert;
+    // Override the alert function to suppress Razorpay alerts
+    window.alert = function (message) {
+      if (
+        typeof message === "string" &&
+        (message.includes("Button") ||
+          message.includes("form") ||
+          message.includes("Payment") ||
+          message.includes("Razorpay"))
+      ) {
+        // Suppress Razorpay alerts
+        console.log("Suppressed alert:", message);
+        return;
+      }
+      // Allow other alerts to show
+      originalAlert(message);
+    };
+
+    // Restore the original alert function when component unmounts
+    return () => {
+      window.alert = originalAlert;
+    };
+  }, []);
+
+  // Initialize Razorpay button on mount
+  useEffect(() => {
+    // Override console warnings and errors that might show alerts
+    const originalConsoleWarn = console.warn;
+    const originalConsoleError = console.error;
+
+    console.warn = function (...args) {
+      // Filter out Razorpay warnings
+      const isRazorpayWarning = args.some(
+        (arg) =>
+          typeof arg === "string" &&
+          (arg.includes("Button") ||
+            arg.includes("form") ||
+            arg.includes("Razorpay"))
+      );
+      if (!isRazorpayWarning) {
+        originalConsoleWarn.apply(console, args);
+      }
+    };
+
+    console.error = function (...args) {
+      // Filter out Razorpay errors that might trigger alerts
+      const isRazorpayError = args.some(
+        (arg) =>
+          typeof arg === "string" &&
+          (arg.includes("Button") ||
+            arg.includes("form") ||
+            arg.includes("Razorpay"))
+      );
+      if (!isRazorpayError) {
+        originalConsoleError.apply(console, args);
+      }
+    };
+
+    // Create and manage script element
+    const initRazorpayButton = () => {
+      // Avoid reinitializing if already done
+      if (razorpayInitialized.current) return;
+
+      const rzpPaymentForm = document.getElementById("rzp_payment_form");
+      if (!rzpPaymentForm) return;
+
+      // Safer approach to clear children (avoids DOM errors)
+      rzpPaymentForm.innerHTML = "";
+
+      setIsRazorpayLoading(true);
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/payment-button.js";
+      script.async = true;
+      script.dataset.payment_button_id = "pl_Q4EpGUzUpirMWJ";
+
+      // Set up events for the script
+      script.onload = () => {
+        // Add a small delay to ensure the button renders
+        setTimeout(() => {
+          // Check if component is still mounted
+          const buttonContainer = document.getElementById("rzp_payment_form");
+          if (!buttonContainer) return;
+
+          const button = buttonContainer.querySelector(
+            ".razorpay-payment-button"
+          );
+          if (button) {
+            setIsRazorpayLoading(false);
+            razorpayInitialized.current = true;
+          } else {
+            // If button isn't found after script loads, show fallback
+            setIsRazorpayLoading(false);
+            setScriptError(true);
+          }
+        }, 1500);
+      };
+
+      script.onerror = () => {
+        setIsRazorpayLoading(false);
+        setScriptError(true);
+      };
+
+      // Safe append
+      try {
+        rzpPaymentForm.appendChild(script);
+      } catch (error) {
+        setIsRazorpayLoading(false);
+        setScriptError(true);
+      }
+    }; // Safely initialize after a short delay to ensure DOM is ready
+    let timer: ReturnType<typeof setTimeout>;
+    let failsafeTimer: ReturnType<typeof setTimeout>;
+
+    timer = setTimeout(() => {
+      initRazorpayButton();
+
+      // Add a failsafe - if still loading after 5 seconds, show fallback
+      failsafeTimer = setTimeout(() => {
+        setIsRazorpayLoading(false);
+        setScriptError(true);
+      }, 5000);
+    }, 200);
+
+    // Clean up all timers and state when component unmounts
+    return () => {
+      // Restore original console functions
+      console.warn = originalConsoleWarn;
+      console.error = originalConsoleError;
+
+      // Clear timers
+      clearTimeout(timer);
+      clearTimeout(failsafeTimer);
+
+      // Reset state if component unmounts during loading
+      setIsRazorpayLoading(false);
+    };
+  }, []);
 
   // Handle form submission
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -287,8 +405,7 @@ const ContactForm = () => {
               </span>
               <CreditCard className="w-4 h-4 mr-2 text-[#cc0d09]" />
               Complete Payment
-            </h3>
-
+            </h3>{" "}
             <div className="bg-white rounded-lg border border-gray-200 p-5 mb-4">
               <div className="text-center mb-3">
                 <div className="font-medium text-sm mb-1 text-gray-700">
@@ -297,27 +414,32 @@ const ContactForm = () => {
                 <div className="text-xs text-gray-500">
                   Secure payment via Razorpay
                 </div>
-              </div>
-
-              <div className="flex justify-center">
+              </div>{" "}
+              <div className="flex justify-center relative min-h-[50px]">
+                {/* Wrapper with proper form structure for Razorpay */}
                 <form
-                  id="rzp_payment_form"
-                  className="mb-2 min-h-[40px]"
-                ></form>
-              </div>
-
-              <div id="razorpay-fallback" className="hidden mt-2">
-                <a
-                  href="https://rzp.io/l/ielts7plus"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block text-center p-2 bg-[#cc0d09] text-white rounded-lg"
+                  action="#"
+                  method="POST"
+                  className="w-full flex justify-center items-center"
                 >
-                  Pay with Razorpay
-                </a>
+                  <div
+                    id="rzp_payment_form"
+                    className="my-2 w-full z-10 flex justify-center items-center"
+                    data-key="rzp_test_key"
+                  ></div>
+                </form>
+
+                {/* Loading overlay - separate from the button container */}
+                {isRazorpayLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-50/50 rounded-md p-2 border border-gray-200 z-20">
+                    <Loader2 className="h-5 w-5 text-[#cc0d09] animate-spin mr-2" />
+                    <span className="text-sm text-gray-600">
+                      Loading payment options...
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
-
             <div className="form-group">
               <label
                 htmlFor="paymentId"

@@ -774,8 +774,17 @@ const ResourcesPage = () => {
   // Set visible after mount for animation
   useEffect(() => {
     setIsVisible(true);
-  }, []);
 
+    // Handle URL hash for direct linking to tabs
+    if (typeof window !== "undefined") {
+      if (window.location.hash === "#essays") {
+        setActiveTab("essays");
+      } else if (window.location.hash === "#videos") {
+        setActiveTab("videos");
+      }
+    }
+  }, []);
+  
   // Use data from imported files
   const videos = useMemo(() => resourceVideos, []);
   const essays = useMemo(() => resourceEssays, []);
