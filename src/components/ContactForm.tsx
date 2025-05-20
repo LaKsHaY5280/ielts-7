@@ -19,6 +19,7 @@ const ContactForm = () => {
   const [isRazorpayLoading, setIsRazorpayLoading] = useState(true);
   const razorpayInitialized = useRef(false);
   const [scriptError, setScriptError] = useState(false);
+  const [isLimitedBrowser, setIsLimitedBrowser] = useState(false);
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -251,7 +252,192 @@ const ContactForm = () => {
       transition: { duration: 0.4, ease: "easeOut" },
     },
   };
+  // Render a simplified version for limited browsers like LG SmartBoard
+  if (isLimitedBrowser) {
+    return (
+      <div className="w-full max-w-4xl mx-auto">
+        <div className="bg-white rounded border border-gray-200 overflow-hidden">
+          <div className="bg-gray-100 p-4 border-b border-gray-200">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-800">
+                Writing Evaluation
+              </h2>
+              <p className="text-gray-600 mt-1">
+                Complete payment (₹49) and submit your writing for expert
+                evaluation
+              </p>
+            </div>
+          </div>
 
+          <form onSubmit={onSubmit} className="p-6 grid grid-cols-1 gap-6">
+            {/* Personal Information Section */}
+            <div className="border border-gray-200 rounded p-4">
+              <h3 className="font-medium text-gray-800 mb-4">
+                1. Personal Information
+              </h3>
+              <div className="grid grid-cols-1 gap-4">
+                <div className="form-group">
+                  <label
+                    htmlFor="name"
+                    className="block mb-1 font-medium text-gray-700"
+                  >
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formState.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full p-2 border border-gray-300 bg-white"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label
+                    htmlFor="email"
+                    className="block mb-1 font-medium text-gray-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formState.email}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full p-2 border border-gray-300 bg-white"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Writing Content Section */}
+            <div className="border border-gray-200 rounded p-4">
+              <h3 className="font-medium text-gray-800 mb-4">
+                2. Your Writing
+              </h3>
+
+              <div className="form-group mb-4">
+                <label
+                  htmlFor="writing_content"
+                  className="block mb-1 font-medium text-gray-700"
+                >
+                  Paste your essay or writing task here
+                </label>
+                <textarea
+                  id="writing_content"
+                  name="writing_content"
+                  value={formState.writing_content}
+                  onChange={handleInputChange}
+                  required
+                  rows={8}
+                  className="w-full p-2 border border-gray-300 bg-white"
+                  placeholder="Paste your IELTS writing task here..."
+                ></textarea>
+              </div>
+
+              <div className="form-group">
+                <label
+                  htmlFor="notes"
+                  className="block mb-1 font-medium text-gray-700"
+                >
+                  Additional Notes (Optional)
+                </label>
+                <textarea
+                  id="notes"
+                  name="notes"
+                  value={formState.notes}
+                  onChange={handleInputChange}
+                  rows={2}
+                  className="w-full p-2 border border-gray-300 bg-white"
+                  placeholder="Any specific concerns or areas you want feedback on..."
+                ></textarea>
+              </div>
+            </div>
+
+            {/* Payment Section */}
+            <div className="border border-gray-200 rounded p-4">
+              <h3 className="font-medium text-gray-800 mb-4">
+                3. Complete Payment
+              </h3>
+              <div className="bg-white rounded border border-gray-200 p-4 mb-4">
+                <div className="text-center mb-3">
+                  <div className="font-medium mb-1 text-gray-700">
+                    Click below to pay ₹49
+                  </div>
+                  <div className="text-gray-500">
+                    Secure payment via Razorpay
+                  </div>
+                </div>
+                <div className="flex justify-center relative min-h-[50px]">
+                  <a
+                    href="https://rzp.io/l/writing-review-ielts7plus"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-blue-500 text-white px-4 py-2 rounded text-center block"
+                  >
+                    Pay ₹49 Now
+                  </a>
+                </div>
+              </div>
+              <div className="form-group">
+                <label
+                  htmlFor="paymentId"
+                  className="block mb-1 font-medium text-gray-700"
+                >
+                  Payment ID (from receipt)
+                </label>
+                <input
+                  type="text"
+                  id="paymentId"
+                  name="paymentId"
+                  value={formState.paymentId}
+                  onChange={handleInputChange}
+                  required
+                  placeholder="e.g. pay_123456789"
+                  className="w-full p-2 border border-gray-300 bg-white"
+                />
+                <p className="text-gray-500 mt-2">
+                  After payment, copy the Payment ID from your receipt (starts
+                  with "pay_")
+                </p>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-3 px-4 bg-[#cc0d09] text-white font-medium"
+              >
+                {isSubmitting ? "Processing..." : "Submit for Evaluation"}
+              </button>
+
+              {result && (
+                <div
+                  className={`mt-4 p-3 border ${
+                    result.includes("success")
+                      ? "bg-green-100 text-green-700 border-green-200"
+                      : "bg-red-100 text-red-700 border-red-200"
+                  }`}
+                >
+                  {result}
+                </div>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // Regular version for modern browsers
   return (
     <div className="w-full max-w-4xl mx-auto">
       <motion.div

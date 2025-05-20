@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   PenTool,
@@ -14,6 +15,9 @@ import ContactForm from "@/components/ContactForm";
 
 const EvaluationPage = () => {
   const { scrollY } = useScroll();
+
+  // State to detect limited browsers like LG SmartBoard
+  const [isLimitedBrowser, setIsLimitedBrowser] = useState(false);
 
   // Parallax effects for scrolling
   const y1 = useTransform(scrollY, [0, 500], [0, -100]);
@@ -40,6 +44,118 @@ const EvaluationPage = () => {
     },
   };
 
+  // Detect limited browsers on component mount
+  useEffect(() => {
+    const detectLimitedBrowser = () => {
+      // Check for common features that might be missing in LG Smart TV browser
+      const isLimited =
+        typeof window !== "undefined" &&
+        (!window.requestAnimationFrame ||
+          !window.matchMedia ||
+          /LG|WebOS|SMART-TV/.test(navigator.userAgent) ||
+          document.documentElement.classList.contains("legacy-browser"));
+
+      setIsLimitedBrowser(isLimited);
+
+      if (isLimited) {
+        // Add a class to body for potential CSS fallbacks
+        document.body.classList.add("limited-browser");
+      }
+    };
+
+    detectLimitedBrowser();
+  }, []);
+  // Return a simplified version of the page for limited browsers like LG SmartBoard
+  if (isLimitedBrowser) {
+    return (
+      <main className="bg-white">
+        {/* Simple Banner for Limited Browsers */}
+        <section className="py-8 bg-gray-50 border-b border-gray-200">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div className="flex items-center mb-2">
+                  <Image
+                    src="/icon.webp"
+                    alt="IELTS 7+ House"
+                    width={36}
+                    height={36}
+                  />
+                  <span className="font-medium text-lg ml-2">
+                    Writing Evaluation Service
+                  </span>
+                </div>
+                <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                  Improve Your Writing Score
+                </h1>
+                <p className="text-gray-600 mb-2">
+                  Expert feedback for only{" "}
+                  <span className="text-[#cc0d09] font-semibold">₹49</span>
+                </p>
+                <ul className="mb-4">
+                  <li className="flex items-center mb-1">
+                    • Detailed error analysis
+                  </li>
+                  <li className="flex items-center mb-1">
+                    • Band score prediction
+                  </li>
+                  <li className="flex items-center mb-1">
+                    • Improvement suggestions
+                  </li>
+                  <li className="flex items-center mb-1">
+                    • 24-48 hour turnaround
+                  </li>
+                </ul>
+                <a
+                  href="#evaluation-form"
+                  className="inline-block px-4 py-2 bg-[#cc0d09] text-white font-medium rounded"
+                >
+                  Submit Your Writing
+                </a>
+              </div>
+              <div>
+                <div className="bg-white border border-gray-200 rounded p-4">
+                  <h3 className="text-lg font-semibold mb-2">
+                    Sample Evaluated Essays
+                  </h3>
+                  <div className="space-y-2">
+                    {[1, 2, 3].map((num) => (
+                      <div
+                        key={num}
+                        className="p-2 bg-gray-50 border border-gray-200 rounded flex items-center"
+                      >
+                        <div className="w-8 h-8 mr-2 bg-gray-200"></div>
+                        <div>
+                          <div className="font-medium">Essay Sample {num}</div>
+                          <div className="text-xs">Band {8 - num}.0</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Simple Evaluation Form Section */}
+        <section id="evaluation-form" className="py-8">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
+              Submit Your Writing for Evaluation
+            </h2>
+            <p className="text-gray-600 mb-6 text-center">
+              Get detailed feedback from our IELTS experts to improve your
+              score. Simply complete the payment and submit your writing below.
+            </p>
+            <ContactForm />
+          </div>
+        </section>
+      </main>
+    );
+  }
+
+  // Regular version for modern browsers
   return (
     <main className="bg-white">
       {/* Hero Section - Compact Banner */}

@@ -770,10 +770,32 @@ const ResourcesPage = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedEssay, setSelectedEssay] = useState<Essay | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLimitedBrowser, setIsLimitedBrowser] = useState(false);
 
-  // Set visible after mount for animation
+  // Set visible after mount for animation and detect browser capability
   useEffect(() => {
     setIsVisible(true);
+
+    // Detect if we're in a limited browser environment
+    const detectLimitedBrowser = () => {
+      // Check for common features that might be missing in LG Smart TV browser
+      const isLimited =
+        typeof window !== "undefined" &&
+        // Check if features commonly missing in limited browsers are absent
+        (!window.requestAnimationFrame ||
+          !window.matchMedia ||
+          /LG|WebOS|SMART-TV/.test(navigator.userAgent) ||
+          document.documentElement.classList.contains("legacy-browser"));
+
+      setIsLimitedBrowser(isLimited);
+
+      if (isLimited) {
+        // Add a class to body for potential CSS fallbacks
+        document.body.classList.add("limited-browser");
+      }
+    };
+
+    detectLimitedBrowser();
 
     // Handle URL hash for direct linking to tabs
     if (typeof window !== "undefined") {
@@ -784,7 +806,7 @@ const ResourcesPage = () => {
       }
     }
   }, []);
-  
+
   // Use data from imported files
   const videos = useMemo(() => resourceVideos, []);
   const essays = useMemo(() => resourceEssays, []);
@@ -807,7 +829,123 @@ const ResourcesPage = () => {
   const handleBackToEssays = useCallback(() => {
     setSelectedEssay(null);
   }, []);
+  // If we're in a limited browser, show a simple version
+  if (isLimitedBrowser) {
+    return (
+      <div className="min-h-screen bg-white" ref={containerRef}>
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center mb-10">
+            <h1 className="text-3xl font-bold text-gray-800 mb-4">
+              Free Learning Resources
+            </h1>
+            <p className="text-gray-600 max-w-3xl mx-auto">
+              Access our comprehensive collection of educational videos and
+              sample essays to enhance your academic writing skills and excel in
+              your IELTS exam.
+            </p>
+          </div>
 
+          {/* Simple Tab Navigation */}
+          <div className="mb-10">
+            <div className="flex justify-center border-b border-gray-200">
+              <button
+                onClick={() => setActiveTab("videos")}
+                className={`px-4 py-2 font-medium text-lg border-b-2 ${
+                  activeTab === "videos"
+                    ? "border-[#cc0d09] text-[#cc0d09]"
+                    : "border-transparent"
+                }`}
+              >
+                Videos
+              </button>
+              <button
+                onClick={() => setActiveTab("essays")}
+                className={`px-4 py-2 font-medium text-lg border-b-2 ${
+                  activeTab === "essays"
+                    ? "border-[#cc0d09] text-[#cc0d09]"
+                    : "border-transparent"
+                }`}
+              >
+                Essays
+              </button>
+            </div>
+          </div>
+
+          {/* Simple Content */}
+          {!selectedEssay ? (
+            <div className="px-4 py-6">
+              {activeTab === "videos" ? (
+                <div className="space-y-8">
+                  {videos.map((video) => (
+                    <div
+                      key={video.id}
+                      className="border border-gray-200 p-4 rounded-md bg-white"
+                    >
+                      <h3 className="text-xl font-semibold mb-2">
+                        {video.title}
+                      </h3>
+                      <p className="mb-4 text-gray-600">{video.description}</p>
+                      <div className="aspect-video mb-4 bg-gray-200 flex items-center justify-center">
+                        <a
+                          href={`https://www.youtube.com/watch?v=${video.videoId}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          Watch on YouTube
+                        </a>
+                      </div>
+                      {video.category && (
+                        <div className="text-xs text-gray-500">
+                          Category: {video.category}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid gap-6">
+                  {essays.map((essay) => (
+                    <div
+                      key={essay.id}
+                      className="border border-gray-200 p-4 rounded-md bg-white"
+                    >
+                      <h3 className="text-xl font-semibold mb-2">
+                        {essay.title}
+                      </h3>
+                      <p className="mb-4 text-gray-600">{essay.content}</p>
+                      <button
+                        onClick={() => handleSelectEssay(essay)}
+                        className="px-4 py-2 bg-[#cc0d09] text-white rounded"
+                      >
+                        Read Full Essay
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            // Simple essay detail view
+            <div className="px-4 py-6 bg-white">
+              <button
+                onClick={handleBackToEssays}
+                className="mb-4 text-blue-600"
+              >
+                ← Back to Essays
+              </button>
+              <h2 className="text-2xl font-bold mb-4">{selectedEssay.title}</h2>
+              <div
+                dangerouslySetInnerHTML={{ __html: selectedEssay.fullContent }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Regular version for modern browsers
   return (
     <div className="min-h-screen bg-gray-50" ref={containerRef}>
       {/* {useAnimationStyles()} */}

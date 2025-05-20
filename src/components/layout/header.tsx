@@ -19,6 +19,7 @@ import {
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLimitedBrowser, setIsLimitedBrowser] = useState(false);
   const [activeItem, setActiveItem] = useState("/");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
@@ -26,12 +27,26 @@ const Header = () => {
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
   const headerBlur = useTransform(scrollY, [0, 100], [0, 8]);
   const headerY = useTransform(scrollY, [0, 100], [0, -10]);
-
-  // Handle scroll effect for header
+  // Handle scroll effect for header and detect limited browsers
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+
+    // Detect if we're in a limited browser environment
+    const detectLimitedBrowser = () => {
+      // Check for common features that might be missing in LG Smart TV browser
+      const isLimited =
+        typeof window !== "undefined" &&
+        (!window.requestAnimationFrame ||
+          !window.matchMedia ||
+          /LG|WebOS|SMART-TV/.test(navigator.userAgent) ||
+          document.documentElement.classList.contains("legacy-browser"));
+
+      setIsLimitedBrowser(isLimited);
+    };
+
+    detectLimitedBrowser();
 
     // Set active menu item based on current path
     setActiveItem(window.location.pathname);

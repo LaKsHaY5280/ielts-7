@@ -1,0 +1,48 @@
+/* Legacy Browser Support for SmartTV browsers like LG WebOS */
+.limited-browser body {
+  /* Ensure standard fonts render well */
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.limited-browser .motion-div {
+  /* Override motion styles for limited browsers */
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+/* Make buttons more visible in limited browsers */
+.limited-browser button,
+.limited-browser a[role="button"] {
+  border: 1px solid #cccccc;
+  padding: 8px 16px;
+  margin: 4px;
+  background: #f0f0f0;
+  color: #333333;
+  font-weight: bold;
+}
+
+/* Ensure contrast for text */
+.limited-browser {
+  color: #000000;
+  background-color: #ffffff;
+}
+
+/* Simple layout for limited browsers */
+.limited-browser .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Override any complex CSS that might not work */
+.limited-browser .bg-gradient-to-r {
+  background: #f5f5f5 !important;
+}
+
+.limited-browser .shadow-lg,
+.limited-browser .shadow-md,
+.limited-browser .shadow-sm {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
