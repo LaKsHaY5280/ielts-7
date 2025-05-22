@@ -9,13 +9,13 @@ export interface Essay {
   date?: string;
 }
 
-// Essay data for the resources page
-export const essays: Essay[] = [
+
+export const essays = [
   {
     id: 1,
     title: "IELTS Bar Chart Sample Answer",
     content:
-      "The chart illustrates the amount of money spent on five consumer goods (cars, computers, books, perfume and cameras) in France and the UK in 2010. Units are measured in pounds sterling. Overall, the UK spent more money on consumer goods than France in the period gi...",
+      "he chart illustrates the amount of money spent on five consumer goods (cars, computers, books, perfume and cameras) in France and the UK in 2010. Units are measured in pounds sterling.Overall, the UK spent more money on consumer goods than France in the period gi...",
     fullContent: `The chart illustrates the amount of money spent on five consumer goods (cars, computers, books, perfume and cameras) in France and the UK in 2010. Units are measured in pounds sterling.<br/><br/>
 
 Overall, the UK spent more money on consumer goods than France in the period given. Both the British and the French spent most of their money on cars whereas the least amount of money was spent on perfume in the UK compared to cameras in France. Furthermore, the most significant difference in expenditure between the two countries was on cameras.<br/><br/>
@@ -24,261 +24,282 @@ In terms of cars, people in the UK spent about £450,000 on this as opposed to t
 
 <br/>On the other hand, the amount of money paid out on the remaining goods was higher in France. Above £350,000 was spent by the French on computers which was slightly more than the British who spent exactly £350,000. Neither of the countries spent much on perfume which accounted for £200,000 of expenditure in France but under £150,000 in the UK.`,
     image: "/essay-1.png",
-    category: "writing",
-    date: "2023-10-15",
   },
   {
     id: 2,
-    title: "IELTS Line Graph Sample Answer",
+    title: "IELTS Table Model Answer 2",
     content:
-      "The line graph illustrates how many tourists visited a particular Caribbean island between 2010 and 2017. Units are measured in thousands...",
-    fullContent: `The line graph illustrates how many tourists visited a particular Caribbean island between 2010 and 2017. Units are measured in thousands.<br/><br/>
+      "The table illustrates the proportion of consumer expenditure in Ireland, Italy, Spain, Sweden and Turkey on three types of consumer goods in 200...",
+    fullContent: `The table illustrates the proportion of consumer expenditure in Ireland, Italy, Spain, Sweden and Turkey on three types of consumer goods in 2002.<br/><br/>
 
-Overall, the number of tourists visiting the island increased over the period shown despite some fluctuations. The highest number was recorded in 2017 while the lowest was in 2010.<br/><br/>
+Overall, the category of consumer goods that all countries spent most on was food, drinks and tobacco, which was three times higher than on the other types of goods. The lowest spending could be seen in the category of leisure and education in all five countries. The outlay of Turkey was generally higher than the other four countries.<br/><br/>
 
-In 2010, the Caribbean island welcomed 10,000 tourists, which rose dramatically to approximately 18,000 in 2011. However, this was followed by a sharp decline to just above 10,000 visitors in 2012.<br/><br/>
+In terms of food, drinks and tobacco, Turkey spent the most at 32.14%. The expenditure of Ireland was also high (28.91%) compared to Sweden which spent the least (15.77%). Spain and Italy spent 18.80% and 16.36% respectively. On the other hand, the lowest expenditure was on leisure and education which accounted for under 5% in all countries. Turkey spent most on these items at just 4.35% of their national expenditure which is around double that of Spain (1.98%).<br/><br/>
 
-Between 2012 and 2015, the trend was generally upwards, apart from a minor dip in 2014. Tourism reached around 20,000 people in 2015, before decreasing slightly to just under 20,000 in 2016. By 2017, the number of tourists had increased significantly, peaking at 25,000 visitors.`,
+Clothing and footwear was the third category of consumer goods and outlays for those items were between 9% in Italy and 5.40% in Sweden.  The national spending in this area for the remaining countries averaged around 6.5%.`,
     image: "/essay-2.png",
-    category: "writing",
-    date: "2023-11-05",
   },
   {
     id: 3,
-    title: "IELTS Agreement/Disagreement Essay",
+    title: "Pie Chart Sample Answer",
     content:
-      "Some people believe that unpaid community service should be a compulsory part of high school education. To what extent do you agree or disagree?",
-    fullContent: `<strong>Some people believe that unpaid community service should be a compulsory part of high school education. To what extent do you agree or disagree?</strong><br/><br/>
+      "The two pie charts illustrate the proportion of five sources of energy production (co...",
+    fullContent: `The two pie charts illustrate the proportion of five sources of energy production (coal, gas, nuclear, petrol and other sources) in France in two years (1995 and 2005). <br/><br/>
 
-In recent years, there has been growing debate about whether community service should be mandatory in high school curricula. While some argue that such requirements help students develop important values, others believe it should remain voluntary. Personally, I strongly agree that community service should be a compulsory component of secondary education, as it provides invaluable life lessons and benefits society.<br/><br/>
+Overall, in both years coal and gas accounted for over half of all energy production, while the least was other energy sources. There was only a very minimal increase in production from gas and coal, whereas nuclear and other sources almost doubled. Petrol was the only energy source to decrease over the period.<br/><br/>
 
-Requiring students to participate in community service fosters essential life skills that traditional classroom learning cannot fully develop. When young people volunteer at homeless shelters, environmental clean-ups, or retirement homes, they gain first-hand experience with social issues and develop empathy toward diverse groups. This practical exposure helps them become more compassionate and socially aware citizens. For instance, studies have shown that teenagers who regularly participate in community service demonstrate higher levels of emotional intelligence and interpersonal skills compared to those who do not engage in such activities.<br/><br/>
+Energy produced by coal comprised of 29.80% in 1995 and by 2005, it increased by about 1% to 30.9%. Likewise, the amount of energy generated by gas went up by approximately 1% from 29.63% in the first year to 30.1% by the final year. The use of nuclear power rose significantly from 6.40% in 1995 to 10.10% in 2005. Other sources of energy production accounted for 4.90% but then climbed to 9.10%.<br/><br/>
 
-Furthermore, mandatory community service benefits both students and their communities simultaneously. Local organizations often struggle with limited resources and manpower; high school volunteers help address these shortages while gaining valuable work experience. This creates a mutually beneficial relationship where communities receive needed support, and students develop professional skills like time management, teamwork, and leadership. These experiences can also enhance university applications and future employment opportunities, giving students practical advantages beyond the moral benefits of their service.<br/><br/>
-
-Critics argue that forcing students to volunteer contradicts the spirit of genuine altruism. However, I believe that initial exposure, even if mandatory, often leads to continued voluntary participation. Research indicates that individuals who begin community service as a requirement frequently continue volunteering afterward, having discovered personal fulfillment in helping others. The key is implementing these programs thoughtfully, with appropriate reflection components that help students process their experiences and understand their broader social impact.<br/><br/>
-
-In conclusion, I firmly support making community service mandatory in high school education. The benefits—including character development, practical skills acquisition, and community enhancement—significantly outweigh concerns about forced participation. By requiring this experience, educational systems can help shape more socially responsible, empathetic, and well-rounded individuals prepared for the challenges of adult citizenship.`,
+Petrol, on the other hand, produced 29.27% of all energy in 1995 but 10 years later only 19.55% of energy came from this source. `,
     image: "/essay-3.png",
-    category: "writing",
-    date: "2023-12-20",
   },
   {
     id: 4,
-    title: "IELTS Problem and Solution Essay",
+    title: "Essay 4",
     content:
-      "In many countries, especially in urban areas, the level of crime is increasing. What do you think are the main causes of this problem and how can it be addressed?",
-    fullContent: `<strong>In many countries, especially in urban areas, the level of crime is increasing. What do you think are the main causes of this problem and how can it be addressed?</strong><br/><br/>
+      "Nowadays young people lack an understanding of how to manage their finances after they finish high school...",
+    fullContent: `Nowadays young people lack an understanding of how to manage their finances after they finish high school. Explain why they do not know how to manage money and how this can be changed. 
+<br/><br/>
+Below is an IELTS cause / solution model essay.
 
-Rising crime rates have become a significant concern in urban centers around the world. This essay examines the primary factors contributing to this troubling trend and proposes potential solutions to address the issue effectively.<br/><br/>
+Many young people are leaving school without a basic and vital understanding of how personal finances ought to be managed in the adult world. This lack of knowledge is due to a lack of life experience and limited education which can be solved in two simple ways.
+<br/><br/>
 
-Several key factors contribute to escalating urban crime rates. Economic inequality is perhaps the most significant driver, as the widening gap between the wealthy and the disadvantaged creates environments where crime may seem like the only viable option for survival. In cities where luxury high-rises stand in stark contrast to impoverished neighborhoods, the social tension often manifests in higher crime rates. Additionally, high unemployment, particularly among young people, leaves many without legitimate income sources or constructive ways to occupy their time. Research consistently demonstrates a strong correlation between youth unemployment and crime rates in urban areas.<br/><br/>
+One main reason why so many young people are unable to manage their own finances upon finishing high school is that they have been living with their parents for free. As a result, they have never needed to earn a salary or save their money in order to pay bills. Another cause is that schools do not factor personal financial management into their curriculum. Schools focus instead on classic subjects, such as maths, geography, history and languages, which means important life skills are not being taught. Both teachers and parents are failing to prepare young people for the real world.
+<br/><br/>
 
-Social disintegration also plays a crucial role in rising crime levels. As traditional community structures break down in rapidly expanding cities, the informal social controls that once discouraged criminal behavior weaken significantly. Furthermore, urban areas often experience insufficient law enforcement presence, with police forces overwhelmed by population density and unable to provide adequate coverage. This creates environments where potential offenders perceive a low risk of apprehension, emboldening criminal activity.<br/><br/>
+There are two options for solving young people's inability to manage personal finances, Firstly, parents should spend time with their children teaching them how money is earned, budgeted and used for either savings or expenses. One simple step could be for parents to start by teaching young children how to manage their pocket money and, as their child grows up, expand into more serious household expenses, Secondly, schools should incorporate life skills into their curriculum for final year students. In this way, children will be able to leam in a supportive environment how their finances need to be budgeted and managed to avoid debt problems later in life.
+<br/><br/>
 
-To effectively address urban crime, a multifaceted approach is necessary. Economic interventions should focus on reducing inequality through targeted investment in disadvantaged neighborhoods, creating employment opportunities, and providing skill development programs. For instance, cities like Glasgow have successfully reduced violent crime by implementing comprehensive economic revitalization programs in previously high-crime areas.<br/><br/>
-
-Community-building initiatives also prove effective in crime reduction. Programs that strengthen social cohesion, such as neighborhood watch schemes, community centers, and local governance structures, help restore the social controls that deter criminal behavior. Educational interventions are equally important, particularly those targeting at-risk youth with mentoring, after-school activities, and career guidance to provide positive alternatives to crime.<br/><br/>
-
-Law enforcement strategies must evolve beyond simply increasing police presence. Smart policing approaches that utilize data analysis to deploy resources more effectively, combined with community policing programs that build trust between residents and officers, have shown promising results in cities worldwide. These should be complemented by criminal justice reforms that emphasize rehabilitation over punishment, particularly for non-violent offenders.<br/><br/>
-
-In conclusion, urban crime stems from complex socioeconomic factors that require comprehensive solutions. While no single approach will eliminate the problem entirely, a combination of economic development, community strengthening, educational support, and reformed law enforcement practices offers the most promising path forward. The success of such initiatives depends on sustained commitment from policymakers, law enforcement agencies, and community stakeholders working together toward safer urban environments.`,
-    category: "writing",
-    date: "2024-01-10",
+In conclusion, young people lack financial management skills due to the negligence of parents and schools, which can only be solved if both take more responsibility for equipping school leavers with the right skills.`,
   },
   {
     id: 5,
-    title: "IELTS Advantages and Disadvantages Essay",
+    title: "ADVANTAGE DISADVANTAGE ESSAY",
     content:
-      "Many people choose to follow a vegetarian diet. What are the advantages and disadvantages of being vegetarian?",
-    fullContent: `<strong>Many people choose to follow a vegetarian diet. What are the advantages and disadvantages of being vegetarian?</strong><br/><br/>
+      "Some people think that it is beneficial for children to do paid work, while others think that it can; be harmful for children.Do you think the advantages outweigh the disadvantages?",
+    fullContent: `
+Some people think that it is beneficial for children to do paid work, while others think that it can; be harmful for children.
+Do you think the advantages outweigh the disadvantages?<br/><br/>
 
-In recent years, vegetarianism has gained significant popularity worldwide as awareness of health, environmental, and ethical concerns continues to grow. This essay examines the key benefits and drawbacks of adopting a plant-based diet.<br/><br/>
 
-One of the primary advantages of vegetarianism is its potential health benefits. Research consistently shows that well-planned vegetarian diets typically contain less saturated fat and cholesterol while providing more dietary fiber, magnesium, potassium, and antioxidants than omnivorous diets. These dietary patterns are associated with lower blood pressure, reduced risk of heart disease, lower incidence of type 2 diabetes, and decreased cancer rates. For instance, a comprehensive study published in the Journal of the American Heart Association found that vegetarians had a 22% lower risk of coronary heart disease compared to meat-eaters.<br/><br/>
+Although paid work is thought by some to be a good experience for children, other people think that it can be detrimental. In my opinion, I consider that paid work can bring about more advantages for children compared to any problems it might bring.
+<br/><br/>
 
-Environmental sustainability represents another significant benefit of vegetarian diets. Livestock farming generates approximately 14.5% of global greenhouse gas emissions according to the UN Food and Agriculture Organization. Additionally, meat production requires substantially more land, water, and energy resources compared to plant foods. By avoiding meat consumption, vegetarians help reduce their carbon footprint, conserve water resources, and mitigate habitat destruction and biodiversity loss.<br/><br/>
+Despite the drawbacks below, I believe the benefits gained by children doing work experience are extremely useful for their future. One benefit is that children can develop an understanding of the value of money. This is a crucial lesson to learn as it teaches them not to waste money by realising the amount of work needed to earn it.Another positive aspect is that children take their first steps in leaming how to save and manage money. Take many older children, for instance, who have a part time job in order to save up for something they would otherwise be unable to afford. Leaming money management is an essential skill later in life when they earn salaries and have bills, to pay.
+<br/><br/>
 
-Ethical considerations also motivate many individuals to adopt vegetarianism. Modern intensive animal agriculture often involves practices that cause animal suffering, including confinement in restrictive spaces and other potentially inhumane treatment. By abstaining from meat, vegetarians align their dietary choices with their moral convictions regarding animal welfare.<br/><br/>
+Admittedly, there are some issues involved when children do paid work. One problem is that it might expose them to exploitation through slave labour. For example, in some developing countries children are made to work full time but due to their age are not protected by law. However, this situation is rare, only happening in certain countries. Another negative aspect is that the time children spend working could prevent them from focusing on their school work. Having a good education is the key to a successful future so if work interferes with their agademic performance this can be a problem.
+<br/><br/>
 
-Despite these advantages, vegetarianism presents several challenges. Nutritional deficiencies can develop without careful dietary planning. Vegetarians must ensure adequate intake of protein, iron, zinc, vitamin B12, calcium, and omega-3 fatty acids—nutrients predominantly found in animal products. While these nutrients can be obtained through plant sources and supplements, doing so requires nutritional knowledge and deliberate food choices.<br/><br/>
-
-Social and practical challenges also affect vegetarians. In many cultures, meat remains central to traditional cuisine and family gatherings, potentially leading to social awkwardness or exclusion. Additionally, dining options may be limited in certain regions or establishments, making adherence to vegetarianism inconvenient at times.<br/><br/>
-
-For some individuals, particularly athletes or those with specific health conditions, vegetarian diets may present additional challenges in meeting increased nutritional requirements without careful planning. While professional vegetarian athletes certainly exist, achieving optimal performance while vegetarian requires more deliberate nutritional strategies.<br/><br/>
-
-In conclusion, vegetarianism offers compelling advantages for personal health, environmental sustainability, and ethical considerations. However, these benefits must be weighed against potential nutritional challenges, social constraints, and practical limitations. The success of a vegetarian lifestyle largely depends on proper planning, nutritional education, and consideration of individual circumstances. As plant-based options become increasingly accessible and nutritional knowledge improves, many of the disadvantages may diminish over time.`,
-    category: "writing",
-    date: "2024-02-05",
+In conclusion, the critical lessons that children can learn when they work for money will stand them in good stead when they are adults and clearly outweigh any disadvantages. <br/><br/>
+`,
   },
   {
     id: 6,
-    title: "IELTS Discussion Essay",
+    title: "DISCUSSION ESSAY",
     content:
-      "Some people believe that children should be free to make mistakes while others believe that adults should prevent children from making serious mistakes. Discuss both views and give your opinion.",
-    fullContent: `<strong>Some people believe that children should be free to make mistakes while others believe that adults should prevent children from making serious mistakes. Discuss both views and give your opinion.</strong><br/><br/>
+      "Some people think that children should be taught to be competitive in school. Others, however, say that cooperation and team working skills are more important. Discuss both sides and give your opinion",
+    fullContent: `
 
-The extent to which adults should allow children to make mistakes versus protecting them from potential harm represents a fundamental dilemma in child-rearing and education. This essay examines both perspectives on this issue and offers a balanced position.<br/><br/>
+Some people think that children should be taught to be competitive in school. Others, however, say that cooperation and team working skills are more important. Discuss both sides and give your opinion.
+<br/><br/>
 
-Proponents of allowing children to make mistakes emphasize the crucial learning opportunities that arise from trial and error. When children experience the natural consequences of their actions, they develop critical thinking skills and judgment that cannot be effectively taught through theoretical instruction alone. For example, a child who forgets to bring their homework to school and faces consequences from their teacher is more likely to develop responsibility than one who is repeatedly rescued by parents. Additionally, making mistakes builds resilience—a vital quality for navigating life's inevitable challenges. Children who learn to cope with small failures develop emotional regulation skills and confidence in their ability to overcome obstacles.<br/><br/>
+Although it is sometimes thought that schools ought to teach children to compete, other people believe that the focus should be on cooperation. In my opinion, I consider that competition helps children learn the most important skills for their future life.
+<br/><br/>
 
-Furthermore, autonomy in decision-making fosters independence and self-efficacy. When adults constantly shield children from making mistakes, they may inadvertently communicate a lack of trust in the child's capabilities, potentially undermining their self-confidence. Research in developmental psychology suggests that children who are given appropriate levels of independence typically develop stronger problem-solving abilities and greater self-assurance.<br/><br/>
+On the one hand, some people think that children who learn to compete against each other often do better in school and I agree. In other words, the competition between students motivates them to excel in their studies or tasks which consequently produces better academic performance and resuits. For example, students generally apply themselves and work harder when they are in direct competition with their classmates. Furthermore, being driven to achieve the best is vital in order to succeed later in life when, as adults, they must compete against others in the job market.
+<br/><br/>
 
-Conversely, those who advocate for preventing serious mistakes argue that adult guidance is essential for children's safety and wellbeing. Children lack the cognitive development, experience, and foresight to fully understand the potential consequences of certain actions. In matters where physical safety is concerned—such as crossing busy streets, handling dangerous objects, or interacting with strangers—adult intervention is clearly necessary to prevent potentially irreversible harm.<br/><br/>
+On the other hand, it is often believed that it is better if the emphasis at school is on cooperating with others. As people we do not live, work or socialise apart from others, so leaming how to work alongside other people ought to be taught from childhood. Without these skills, children would lack the ability to communicate with each other or know how to deal with confrontations and conflicts in a constructive way. Another reason why team skills are useful for children is that they learn how to negotiate with others to complete a task. This is an essential skill to learn for their future life.
+<br/><br/>
 
-Beyond physical safety, some mistakes carry long-term consequences that could significantly impact a child's future. Academic decisions, social media activities, or substance experimentation can have repercussions that extend far beyond the immediate learning experience. Adults who have already navigated similar situations can offer valuable perspective that children simply do not possess.<br/><br/>
-
-Additionally, guided learning can be more efficient and less traumatic than learning through serious mistakes. Skillful adults can help children understand potential consequences through discussion, modeling, or controlled experiences rather than through potentially harmful trial and error. This approach provides educational benefits while minimizing unnecessary risk.<br/><br/>
-
-In my view, a balanced approach that distinguishes between different types of mistakes offers the most reasonable solution. For minor mistakes with manageable consequences—forgetting assignments, losing possessions, or experiencing minor social conflicts—children should generally be allowed to experience natural outcomes and learn from them. These situations provide valuable learning opportunities with relatively low stakes.<br/><br/>
-
-However, adult intervention becomes essential when mistakes could lead to significant harm or have far-reaching consequences disproportionate to their educational value. In these cases, adults should provide guidance, establish appropriate boundaries, and explain their reasoning to help children understand the protective rationale.<br/><br/>
-
-The optimal approach should also evolve as children develop, gradually expanding their autonomy as they demonstrate increasing maturity and judgment. This progressive independence allows children to build decision-making skills in age-appropriate ways while maintaining necessary safeguards.<br/><br/>
-
-In conclusion, while making mistakes constitutes an important part of childhood development and learning, adults have a responsibility to provide appropriate guidance and protection. The challenge lies in striking the right balance—allowing enough freedom for growth and learning while preventing potentially harmful outcomes that offer little educational benefit.`,
-    category: "writing",
-    date: "2024-02-28",
+In conclusion, while people may vary in their opinions, I think that children stand a better chance to succeed both in school and later in life if they are encouraged to compete against each other.`,
   },
   {
     id: 7,
-    title: "IELTS Opinion Essay",
+    title: "AGREE DISAGREE ESSAY ",
     content:
-      "Some people believe that hosting international sports events is beneficial for a country, while others believe it is costly and disruptive. What is your opinion?",
-    fullContent: `<strong>Some people believe that hosting international sports events is beneficial for a country, while others believe it is costly and disruptive. What is your opinion?</strong><br/><br/>
+      "Nowadays, more people are choosing to socialise online rather than face to face. Is this a pesitive or negative development?",
+    fullContent: `
 
-The question of whether hosting major international sporting events such as the Olympics or the World Cup ultimately benefits the host nation has become increasingly contentious in recent years. While proponents highlight economic and social advantages, critics point to financial burdens and logistical disruptions. After careful consideration of both perspectives, I believe that while hosting such events can offer significant benefits, these advantages are often overstated and typically outweighed by substantial long-term costs.<br/><br/>
+Nowadays, more people are choosing to socialise online rather than face to face. Is this a pesitive or negative development?
+<br/><br/>
 
-Supporters of hosting international sports events frequently emphasize potential economic stimulation. They argue that such events attract global tourism, generate employment opportunities, and stimulate investment in infrastructure. For example, the 2012 London Olympics reportedly contributed £9.9 billion to the UK economy and created thousands of jobs. Additionally, these events can enhance a nation's international profile and prestige, potentially attracting future tourism and business investment long after the event concludes.<br/><br/>
+IELTS Model Essay: Positive or Negative Development?<br/><br/>
 
-Beyond economic considerations, hosting international competitions can inspire national pride and social cohesion. When citizens rally behind their country's athletes and take pride in showcasing their culture to the world, it can create lasting positive memories and strengthen national identity. The 2010 World Cup in South Africa, for instance, temporarily united a nation still healing from apartheid's legacy and showcased the country's progress to global audiences.<br/><br/>
 
-However, I find the arguments against hosting these events more compelling. The financial burden on host countries is often massive and frequently underestimated during bidding processes. Infrastructure costs typically exceed initial projections by significant margins—the 2014 Sochi Winter Olympics, originally budgeted at $12 billion, ultimately cost an estimated $51 billion. More concerning is that specialized facilities like velodromes or large stadiums frequently become "white elephants" after the event, requiring ongoing maintenance while generating minimal revenue.<br/><br/>
+An increasing number of people meet and talk to their friends online instead of in person, In my opinion, this is a negative development which can lead to isolation, potentially harmful situations and also problems later on in life.
+<br/><br/>
 
-The economic benefits are also frequently overstated or fail to materialize as predicted. Tourism increases are often temporary and may even displace regular tourism. A study of the 2012 London Olympics found that while the event attracted Olympic tourists, regular tourism actually decreased during that period, resulting in negligible net tourism gains. Additionally, economic benefits tend to be concentrated among certain industries and corporations rather than benefiting the broader population.<br/><br/>
+One serious problem that can arise from people socialising online is that it can lead to isolation. Before the internet, people ivould frequently go out to meet friends, for example in cafes, bars or restaurants, whereas now people prefer to stay at home alone, chatting online. As a result, people are starting to spend the majority of their time alone at home in their room without meeting others. Isolation of this kind is nơi heathy anu can sometimes lead to depression and other issues.
+<br/><br/>
 
-Social disruptions can also be significant, particularly for local residents. Construction projects may displace communities, increase housing costs, and create years of inconvenience. During the 2016 Rio Olympics, thousands of residents were relocated from favelas, often with inadequate compensation. Traffic congestion, security concerns, and altered daily routines can significantly disrupt local life, while environmental impacts from construction and increased visitor numbers can be substantial.<br/><br/>
+Another issue is that meeting people online can be risky. In other words, people can assume fake identities online as well as hide their true characteristics. This is particularly conceming for teenagers who are impressionable and can easily be led into dangerous situations. Furthermore, as this interaction is online, parents have no way of monitoring it and protecting their children.
+<br/><br/>
 
-Most concerning is that hosting responsibilities frequently fall to taxpayers while benefits are privatized. When projected revenues fail to materialize, citizens ultimately bear the financial burden through increased taxes or reduced public services, often for decades following the event. Montreal's 1976 Olympics, for example, left the city with debts that took 30 years to repay.<br/><br/>
+Finally, socialising online can end in difficulties years later as conversations and shared photos that had been forgotten reappear. This situation is currently critical for many people, again especially for teenagers who do not think carefully before posting online. That is to say, information which is put online can remain there forever and while people may share intimate communications with close friends, these words can then resurface later on leading to much embarrassment.
+<br/><br/>
 
-In conclusion, while international sporting events can create moments of national unity and some economic stimulus, the evidence increasingly suggests that most host nations face financial burdens that outweigh tangible benefits. Rather than competing for hosting rights through increasingly expensive bids, countries might better serve their citizens by investing directly in sustainable infrastructure, grassroots sports development, and public services. If such events are to become truly beneficial for host nations, significant reforms to the bidding and financing processes would be necessary to ensure costs and benefits are more equitably distributed.`,
-    category: "writing",
-    date: "2024-03-15",
+I conclusion , although it has become more popular for people to socialise through Ee mternet, it has brought about too many problems for this to be considered a positive trend.`,
   },
   {
     id: 8,
-    title: "IELTS Pie Chart Sample Answer",
+    title: "DOUBLE QUESTION ESSAY ",
     content:
-      "The pie charts show the main reasons for migration to and from the UK in 2007. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-    fullContent: `<strong>The pie charts show the main reasons for migration to and from the UK in 2007. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong><br/><br/>
+      "In some parts of the world it is becoming popular to research the history of one's own family. Why might people want to do this? Is it a positive or negative development?",
+    fullContent: `
 
-The pie charts illustrate why people immigrated to and emigrated from the United Kingdom in 2007, categorized by their primary motivations.<br/><br/>
+In some parts of the world it is becoming popular to research the history of one's own family. Why might people want to do this? Is it a positive or negative development?
+<br/><br/>
 
-Overall, employment was the dominant factor influencing both immigration and emigration, though it was more significant for those leaving the UK. There were notable differences between incoming and outgoing migration reasons, particularly regarding education and joining family members.<br/><br/>
+Exploring one's family background and history is becoming increasingly popular in numerous countries around the world. In my opinion, through research and knowing more about one's family, people can see common trends passed through generations and useful information which can only be seen as beneficial for people's future.
+<br/><br/>
 
-For immigration to the UK, employment-related reasons constituted the largest segment at 39%, indicating that job opportunities were the primary attraction for foreigners. Education represented the second most common reason at 35%, suggesting the UK's strong reputation for academic institutions. Family-related factors accounted for a smaller proportion (19%), while only 7% came to the UK for other unspecified reasons.<br/><br/>
+One main reason is that some people look into their family history in order to discover any common trends with family members of a previous generation. This can be especially so with people who have particular skills, gifts or interests in uncommon fields. In other words, assome gifts and skills are hereditary, it can be interesting for people to learn how midly others in their family shared these talents from previous generations.
+<br/><br/>
 
-Regarding emigration patterns, employment was even more prominent, with 45% of people leaving the UK for work-related reasons, possibly seeking better career prospects abroad. Family considerations were the second most common motivation (29%), considerably higher than for immigration. Notably, education represented a much smaller factor for emigration (15%) compared to immigration, indicating that fewer UK residents left to study abroad than foreigners came to study in the UK. The remaining 11% departed for various other reasons.<br/><br/>
+Another reason for the popularity of finding out about one's family history is often due to general curiosity of one's geographical origins. That is to say, some families moved abroad, away from their own country, generations ago which resulted in them losing their original culture and adopting the culture of the country they moved to. Therefore, through research, people can learn more about their country of origin and understand more about the culture that their family originally came from.
+<br/><br/>
 
-When comparing the two charts, the most striking contrast is between education's role in migration flows: it was a major factor drawing people to the UK (35%) but much less significant (15%) for those departing. Conversely, family reasons were more important for emigrants (29%) than for immigrants (19%), suggesting stronger family-based motivations for UK residents moving overseas than for foreigners coming to Britain.`,
-    category: "writing",
-    date: "2024-03-28",
+Finally, the trend of researching family history is certainly beneficial and can help people find their place in the world. Some people feel a lack of direction in life or are dislocated from others but by learning more about their past family history, it can help them relate to the world and feel more comfortable about who they are.Take, for example, a person who feels nervous about making a certain choice in life, they may feel comforted by knowing that others in their family made the same choice many generations ago.
+<br/><br/>
+
+In conclusion, it can be advantageous for people to learn more about the family's background and origins. It would be useful for children to learn about their own family history, if this was incorporated into the school curriculum.`,
   },
   {
     id: 9,
-    title: "IELTS Map Comparison Sample Answer",
-    content:
-      "The diagrams show a café and restaurant in 2012 and the same building in the present day after some changes were made. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-    fullContent: `<strong>The diagrams show a café and restaurant in 2012 and the same building in the present day after some changes were made. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong><br/><br/>
+    title: "WRITING TASK 1(Formal letter)",
+    content: `You should spend about 20 minutes on this task.
 
-The diagrams illustrate the layout transformations of a building that housed a café and restaurant in 2012 compared to its current configuration. The establishment has undergone significant structural changes while maintaining its basic rectangular shape.<br/><br/>
+You were hurt in a small accident in a store last week. Write a letter to the store manager. In your letter:
+* introduce yourself
+* describe what happened
+* say what action you would like the manager to take
+`,
+    fullContent: `
 
-In 2012, the building was divided into two distinct businesses—a café occupying approximately one-third of the space on the left side and a restaurant taking up the remaining two-thirds on the right. The café featured a counter near the entrance with seating arranged in the remaining space. The restaurant section was more spacious and contained tables distributed throughout the area, with a kitchen positioned at the back right corner and toilets located in the back left corner adjacent to the café.<br/><br/>
+You should spend about 20 minutes on this task.
 
-The current layout reveals a complete reorganization of the interior space. The most notable change is that the building now operates as a single restaurant rather than two separate establishments. The former dividing wall has been removed to create one large integrated space. The entrance has been relocated from the left side to the center of the building, providing more direct access to all areas.<br/><br/>
+You were hurt in a small accident in a store last week. Write a letter to the store manager. In your letter:<br/><br/>
 
-The kitchen has been significantly expanded and now occupies the entire back portion of the building, suggesting an increased focus on food preparation capacity. The toilets have been moved from the back left corner to the front right section, making them more accessible to customers. Seating arrangements have been completely reconfigured with tables now organized more systematically throughout the main dining area.<br/><br/>
+* introduce yourself<br/>
+* describe what happened<br/>
+* say what action you would like the manager to take<br/>
+<br/>
+Write at least 150 words.<br/><br/>
 
-Overall, the renovation has transformed what was previously two adjacent but separate businesses into a single, more spacious restaurant with enhanced kitchen facilities and a more logical arrangement of customer amenities.`,
-    image: "/map_comp.jpg",
-    category: "writing",
-    date: "2024-04-12",
+You do NOT need to write any addresses.
+
+Begin your letter as follows<br/><br/>
+
+
+
+SAMPLE ANSWER<br/><br/>
+
+Dear Sir or Madam,<br/><br/>
+
+I am writing to bring to your attention an incident that occurred in your supermarket last weekend. I would also like to make some suggestions so that such a thing does not happen again.<br/><br/>
+
+My name is Harry  and I have been a loyal customer at your Walmart  on Grange Road ever since I moved into the area eight years ago. Although your store is slightly further from my home than the IGA, I have always made the trip because of your quality fresh produce and excellent customer service.<br/><br/>
+
+On this occasion, however, I suffered an unfortunate accident due, I believe, to the negligence of the shop floor staff. As I was walking to the checkout with my groceries, I slipped on some spilled water and fell over, spraining my wrist in the process.<br/><br/>
+
+Though I understand the store gets very busy, I feel that this fall could have been avoided if the staff had been quicker to act. I would therefore like to suggest that you review your policies around spillages, and, in particular, ensure that staff members stand guard next to any spilled liquids until they have been cleaned up.<br/><br/>
+
+I hope you will take this into account in order to avoid further mishaps.<br/><br/>
+
+Yours faithfully ,<br/>
+Harry Singh <br/>`,
   },
   {
     id: 10,
-    title: "IELTS Direct Question Essay",
+    title: "WRITING TASK 1(informal letter)",
     content:
-      "In many countries, the population is aging rapidly. What problems will this cause? What solutions can you suggest?",
-    fullContent: `<strong>In many countries, the population is aging rapidly. What problems will this cause? What solutions can you suggest?</strong><br/><br/>
+      "You should spend about 20 minutes on this task.You made plans to have dinner with a friend, but you were unable to go as promised. Write an apology letter to your friend and say",
+    fullContent: `
 
-Many developed and developing nations are experiencing unprecedented demographic shifts as their populations grow older at accelerating rates. This essay examines the significant challenges posed by this trend and proposes potential strategies to address them effectively.<br/><br/>
+You should spend about 20 minutes on this task.<br/><br/>
 
-The aging population phenomenon creates several interrelated problems across economic, healthcare, and social domains. From an economic perspective, labor market disruptions present a primary concern. As larger proportions of populations retire, workforces contract, potentially leading to labor shortages and productivity declines. This demographic imbalance strains pension systems as fewer working-age adults support growing numbers of retirees. For example, Japan's old-age dependency ratio has reached critical levels, with just 1.8 working-age individuals supporting each elderly person—a situation that threatens fiscal sustainability.<br/><br/>
+You made plans to have dinner with a friend, but you were unable to go as promised. Write an apology letter to your friend and say<br/><br/>
 
-Healthcare systems face mounting pressure as aging populations typically require more medical services. Age-related conditions like dementia, heart disease, and mobility issues drive increased healthcare demands and expenditures. The World Health Organization projects that global dementia cases alone will triple by 2050, requiring substantial increases in specialized care facilities and trained personnel. Additionally, extended lifespans often mean longer periods of dependency and care needs, further straining formal and informal support systems.<br/><br/>
+• why couldn't you make it<br/>
+• how you tried to reach him/her<br/>
+• how you will make up for it another time.<br/>
+<br/>
+Write at least 150 words.<br/>
+You do NOT need to write any addresses.
+<br/><br/>
+Hi Jill,<br/><br/>
 
-Social challenges include potential intergenerational tensions over resource allocation and shifting family structures. As families grow smaller and more geographically dispersed, traditional elder care networks weaken, leaving many seniors isolated. This isolation correlates with increased mental health issues and reduced quality of life for elderly populations.<br/><br/>
+Hope you're well. I'm just writing to apologise again for standing you up last week!<br/><br/>
 
-To address these challenges, multifaceted approaches are necessary. Pension and retirement policy reforms represent an urgent priority. Gradually increasing retirement ages to reflect longer lifespans can help maintain adequate workforce participation. Complementary policies should encourage phased retirement options, allowing older workers to reduce hours while remaining economically active and mentoring younger colleagues. Implementing more sustainable pension funding mechanisms, potentially including a mix of public and private solutions, can help ensure long-term system viability.<br/><br/>
+As I mentioned in my text, I got called into an urgent meeting at work that I couldn't get out of. I was watching the clock as it got closer and closer to our dinner reservation time, and I should've just popped out to give you a call. I wish I had now.The boss was having a big rant though, so I felt like I couldn't leave without creating a scene.<br/><br/>
 
-Healthcare adaptation strategies should emphasize preventive care and healthy aging initiatives to reduce dependency periods and improve quality of life. Investing in geriatric training for healthcare professionals and developing integrated care models that coordinate services across medical and social domains can improve efficiency and outcomes. Technology offers promising solutions through telemedicine, remote monitoring systems, and assistive devices that enable more seniors to maintain independence while reducing institutional care costs.<br/><br/>
+I sent you that text quickly from inside the meeting, which is why it was so short and probably sounded a bit rude. I should've called you, I know, but I hope you can understand the sticky spot I was in, especially as l'm so new in the company. I feel awful!<br/><br/>
 
-Immigration policies represent another important approach, as strategic immigration can help balance dependency ratios by bringing working-age individuals into aging societies. Countries like Canada have successfully implemented points-based immigration systems that prioritize skilled workers who can contribute economically while integrating socially.<br/><br/>
+Anyway, l'd love to make it up to you if you're not too mad still. How about we go out for dinner and see that new Bond movie next Thursday? I've got the whole day off, so there's no chance of getting stuck in a meeting!<br/><br/>
 
-Building age-friendly communities through urban planning and housing design can significantly enhance seniors' independence and social participation. Features like accessible public transportation, walkable neighborhoods, and multigenerational housing options help elderly citizens remain active community members rather than becoming isolated.<br/><br/>
+So sorry again and hope we can catch up next week. Let me know if that suits you.<br/><br/>
 
-In conclusion, population aging presents substantial challenges that require comprehensive policy responses across multiple domains. The most effective approaches will combine economic measures like retirement policy adjustments and strategic immigration with healthcare system adaptations and community design innovations. Countries that implement forward-thinking, integrated strategies will be better positioned to transform population aging from a crisis into a manageable transition that preserves both economic vitality and social cohesion.`,
-    category: "writing",
-    date: "2024-04-20",
+Warm wishes,<br/>
+Harry`,
   },
   {
     id: 11,
-    title: "IELTS Process Diagram Sample Answer",
-    content:
-      "The diagram illustrates the process of producing cement, and how cement is then used to manufacture concrete for building purposes. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.",
-    fullContent: `<strong>The diagram illustrates the process of producing cement, and how cement is then used to manufacture concrete for building purposes. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</strong><br/><br/>
+    title: "WRITING TASK 1 (Semiformal latter)",
+    content: `Write a letter to your boss apologising for the recent meeting you missed at work.
+•Apologise for missing the meeting. 
+•Explain what happened. 
+•Say what you will do to compensate. 
+`,
+    fullContent: `
 
-The diagram depicts the step-by-step manufacturing process of cement and its subsequent use in concrete production for construction applications. The process involves two main phases: cement production and concrete manufacturing.<br/><br/>
+Write a letter to your boss apologising for the recent meeting you missed at work.<br/>
+•Apologise for missing the meeting.<br/>
+•Explain what happened.<br/>
+•Say what you will do to compensate.<br/>
+<br/>
+Model Answer for an IELTS <br/><br/>
 
-The cement production process begins with two primary raw materials: limestone and clay. These materials are crushed separately using a crusher machine to reduce them to smaller particles. Once crushed, the limestone and clay are combined in a specifically calibrated ratio in a mixer to create a uniform blend. This mixture is then fed into a rotating heater, where it undergoes intense heating that transforms it into cement. The finished cement is then packed into bags, making it ready for distribution or use in the next phase.<br/><br/>
+Dear Mr Patel,<br/><br/>
 
-The concrete manufacturing process involves combining the previously produced cement with three additional materials: sand, gravel, and water. These four ingredients are measured in precise amounts and placed into a concrete mixer. The mixer rotates to thoroughly blend all components into a uniform concrete mixture. Once properly mixed, the concrete is ready to be transported to construction sites where it can be used for various building applications, such as foundations, walls, and structural elements.<br/><br/>
+I am writing to apologise for the meeting I missed on October 20th about development plans for the company.<br/><br/>
 
-It is notable that the entire process follows a logical sequence from raw materials to finished product, with cement production serving as an intermediate step in the overall concrete manufacturing procedure. The diagram clearly illustrates how basic natural resources are transformed through mechanical and thermal processes into sophisticated building materials essential for modern construction.`,
-    category: "writing",
-    date: "2024-04-28",
+I am sincerely sorry for not being able to attend this meeting. I am aware of the importance of the meeting but, unfortunately, my absence was unavoidable.<br/><br/>
+
+The reason for not attending this meeting was that I had a car accident on the way to work that day. Although the accident was not serious, I was taken to hospital for a check up and not alloyed to leave until I had been given the all clear from a doctor.<br/><br/>
+
+I understand how crucial this meeting was and, therefore, I have asked one of my colleagues, Sandra Brown, to review the meeting with me after work today. We will go over all development plans and also people's roles and responsibilities. By the end of today, I will be up to speed with all plans.<br/><br/>
+
+I hope you will forgive my absence and be assured of my commitment to this company and its future .<br/><br/>
+
+Yours sincerely,<br/>
+Rich Broth
+
+`,
   },
   {
     id: 12,
-    title: "IELTS Cause and Effect Essay",
+    title: "Map Comparison Model Answer",
     content:
-      "Many young people leave school with little knowledge about managing money. What are the reasons? What are the effects on individuals and society?",
-    fullContent: `<strong>Many young people leave school with little knowledge about managing money. What are the reasons? What are the effects on individuals and society?</strong><br/><br/>
+      "The three maps illustrate how Meadowside village and Fonton, which is a nearby town, have developed from 1962 to the present...",
+    fullContent: `
 
-Financial literacy represents a critical life skill, yet educational systems worldwide often fail to equip young people with adequate knowledge about money management. This essay examines the causes of this educational gap and its consequential impacts on individuals and broader society.<br/><br/>
+The three maps illustrate how Meadowside village and Fonton, which is a nearby town, have developed from 1962 to the present.<br/>
 
-Several factors contribute to the insufficient financial education among young graduates. First, traditional curricula prioritize academic subjects over practical life skills. Educational systems typically emphasize mathematics, sciences, and humanities while treating financial literacy as peripheral or optional. In many countries, financial education either does not exist as a dedicated subject or appears only as a minor component within broader courses, receiving minimal classroom time and attention.<br/><br/>
-
-Teacher preparedness also presents a significant barrier. Many educators lack specialized training in financial concepts and may feel uncomfortable teaching material outside their expertise. A survey by the National Endowment for Financial Education found that only 11% of teachers felt "very comfortable" teaching financial literacy topics, highlighting a major implementation challenge even when such material is nominally included in curricula.<br/><br/>
-
-Additionally, misaligned assumptions regarding financial education contribute to the problem. Many schools and parents incorrectly assume that financial knowledge is primarily acquired at home rather than through formal education. However, research indicates that parents often feel ill-equipped to teach complex financial concepts, creating an educational gap when schools similarly abdicate this responsibility.<br/><br/>
-
-The consequences of inadequate financial education manifest at both individual and societal levels. For individuals, poor money management skills frequently lead to significant personal hardship. Young adults without financial literacy are more likely to accumulate excessive debt, particularly through credit cards and loans. A study by the Financial Industry Regulatory Authority found that individuals with low financial literacy pay approximately 50% more in credit card interest and fees compared to their more financially educated counterparts.<br/><br/>
-
-Inadequate retirement planning represents another individual consequence, as financially uninformed young people typically delay or neglect long-term savings. This oversight substantially reduces their ability to accumulate adequate retirement funds through compound interest. Statistics show that individuals who begin retirement planning in their 20s can accumulate approximately three times the wealth of those who begin in their 40s, even with similar contribution amounts.<br/><br/>
-
-Vulnerability to financial fraud and predatory lending also increases among the financially uninformed. Without understanding complex financial products or recognizing warning signs, young people become susceptible to exploitation. The Consumer Financial Protection Bureau reports that victims of financial fraud are disproportionately represented among those with limited financial education.<br/><br/>
-
-At the societal level, widespread financial illiteracy contributes to multiple economic challenges. Higher personal bankruptcy rates increase legal system burdens and create ripple effects throughout the economy as businesses absorb unpaid debts. According to the American Bankruptcy Institute, areas with lower average financial literacy scores consistently show higher bankruptcy filing rates.<br/><br/>
-
-Financial illiteracy also exacerbates economic inequality. Without understanding investment principles, wealth-building strategies, or even basic budgeting concepts, disadvantaged populations remain trapped in cycles of financial instability. This dynamic widens existing socioeconomic gaps and increases pressure on social safety net programs.<br/><br/>
-
-Financial market instability can emerge when large segments of the population make uninformed financial decisions. The 2008 housing crisis partly resulted from many borrowers accepting mortgage terms they did not fully understand, illustrating how individual financial illiteracy can contribute to systemic economic problems affecting entire nations.<br/><br/>
-
-In conclusion, the lack of financial education among young graduates stems from curriculum priorities, teacher preparedness issues, and misplaced assumptions about where such knowledge should be acquired. The resulting impacts include personal financial hardship, increased vulnerability to exploitation, and broader societal and economic challenges. Addressing this educational gap requires comprehensive approaches that integrate financial literacy throughout educational curricula, enhance teacher training, and recognize money management as a core competency rather than an optional skill.`,
-    category: "writing",
-    date: "2024-05-01",
+Overall, both Fonton and Meadowside village increased in size over the years until they eventually merged together, at which point Meadowside became a suburb. Furthermore, there have been significant changes to infrastructure, housing and facilities over the period given.
+<br/><br/>
+In 1962, both Meadowside and Fonton were completely separate with no roads or rail connecting them. While Fonton had a railway line running to the north, Meadowside, located to the west of Fonton, only had a small road from the west.
+<br/><br/>
+By 1985, Meadowside had expanded and the small road had become a main road. A further main road had been built to connect the village to Fonton. Within Meadowside, a superstore, leisure complex and housing estate had been developed. By this time, Fonton had also grown in size.
+<br/><br/>
+Currently, Meadowside is known as Meadowside Suburbs after joining with Fonton.
+<br/><br/>
+Between both places, a hotel, station and business park have been built on either side of the railway line`,
+    image: "/map_comp.jpg",
   },
+
   {
     id: 13,
     title: "IELTS Process Diagram - Australian Rainwater System",

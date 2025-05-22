@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import ChromiumResourceOptimizer from "@/components/ChromiumResourceOptimizer";
 
 // Import data from existing data files
 import { videos as resourceVideos } from "@/data/resources/videos";
@@ -774,24 +775,39 @@ const ResourcesPage = () => {
 
   // Set visible after mount for animation and detect browser capability
   useEffect(() => {
-    setIsVisible(true);
-
-    // Detect if we're in a limited browser environment
+    setIsVisible(true); // Detect if we're in a limited browser environment
     const detectLimitedBrowser = () => {
-      // Check for common features that might be missing in LG Smart TV browser
+      // Check for common features that might be missing in LG Smart TV browser or SmartBoard
       const isLimited =
         typeof window !== "undefined" &&
         // Check if features commonly missing in limited browsers are absent
         (!window.requestAnimationFrame ||
           !window.matchMedia ||
-          /LG|WebOS|SMART-TV/.test(navigator.userAgent) ||
-          document.documentElement.classList.contains("legacy-browser"));
+          /LG|WebOS|SMART-TV|Android 8|Android\/8|Chromium\/[5-6]/.test(
+            navigator.userAgent
+          ) ||
+          (navigator.userAgent.includes("Chrome") &&
+            /Android 8|Android\/8/.test(navigator.userAgent)) ||
+          document.documentElement.classList.contains("legacy-browser") ||
+          document.documentElement.classList.contains("limited-browser"));
 
-      setIsLimitedBrowser(isLimited);
+      // Additional detection for LG SmartBoard
+      const isLGBoard =
+        /LG|SMART-TV|WebOS|NetCast/.test(navigator.userAgent) ||
+        (/Android 8|Android\/8/.test(navigator.userAgent) &&
+          (/Chrome\/[5-7]/.test(navigator.userAgent) ||
+            /Chromium\/[5-7]/.test(navigator.userAgent)));
 
-      if (isLimited) {
+      setIsLimitedBrowser(isLimited || isLGBoard);
+
+      if (isLimited || isLGBoard) {
         // Add a class to body for potential CSS fallbacks
         document.body.classList.add("limited-browser");
+
+        // Add specific class for LG SmartBoard
+        if (isLGBoard) {
+          document.documentElement.classList.add("lg-smartboard");
+        }
       }
     };
 
@@ -828,11 +844,11 @@ const ResourcesPage = () => {
   // Handle going back from essay view
   const handleBackToEssays = useCallback(() => {
     setSelectedEssay(null);
-  }, []);
-  // If we're in a limited browser, show a simple version
+  }, []); // If we're in a limited browser, show a simple version
   if (isLimitedBrowser) {
     return (
       <div className="min-h-screen bg-white" ref={containerRef}>
+        <ChromiumResourceOptimizer />
         <div className="container mx-auto px-4 py-8">
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -944,10 +960,12 @@ const ResourcesPage = () => {
       </div>
     );
   }
-
   // Regular version for modern browsers
   return (
     <div className="min-h-screen bg-gray-50" ref={containerRef}>
+      {/* Add ChromiumResourceOptimizer for Android 8 Chromium optimization */}
+      <ChromiumResourceOptimizer />
+
       {/* {useAnimationStyles()} */}
 
       {/* Hero Section */}

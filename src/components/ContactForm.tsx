@@ -183,6 +183,36 @@ const ContactForm = () => {
     };
   }, []);
 
+  // Detect limited browsers on component mount
+  useEffect(() => {
+    const detectLimitedBrowser = () => {
+      // Check for common features that might be missing in LG Smart TV browser or SmartBoard
+      const isLimited =
+        typeof window !== "undefined" &&
+        (!window.requestAnimationFrame ||
+          !window.matchMedia ||
+          /LG|WebOS|SMART-TV|Android 8|Android\/8|Chromium\/[5-6]/.test(
+            navigator.userAgent
+          ) ||
+          (navigator.userAgent.includes("Chrome") &&
+            /Android 8|Android\/8/.test(navigator.userAgent)) ||
+          document.documentElement.classList.contains("legacy-browser") ||
+          document.documentElement.classList.contains("limited-browser"));
+
+      // Additional detection for LG SmartBoard
+      const isLGBoard =
+        document.documentElement.classList.contains("lg-smartboard") ||
+        /LG|SMART-TV|WebOS|NetCast/.test(navigator.userAgent) ||
+        (/Android 8|Android\/8/.test(navigator.userAgent) &&
+          (/Chrome\/[5-7]/.test(navigator.userAgent) ||
+            /Chromium\/[5-7]/.test(navigator.userAgent)));
+
+      setIsLimitedBrowser(isLimited || isLGBoard);
+    };
+
+    detectLimitedBrowser();
+  }, []);
+
   // Handle form submission
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -1,0 +1,117 @@
+.android8 {
+  /* Fix rendering and layout issues on Android 8 */
+  text-size-adjust: 100% !important;
+  -webkit-text-size-adjust: 100% !important;
+}
+
+.android8 input,
+.android8 textarea,
+.android8 select,
+.android8 button {
+  border: 1px solid #ccc !important;
+  padding: 8px !important;
+  font-size: 16px !important; /* Prevent zoom on input focus */
+  background: #fff !important;
+  -webkit-appearance: none !important; /* Fix for custom styles not rendering */
+  border-radius: 0 !important; /* Prevent rendering issues */
+}
+
+/* Fix scrolling issues on Android 8 Chromium */
+.android8 {
+  -webkit-overflow-scrolling: auto !important;
+  overflow-scrolling: auto !important;
+}
+
+/* Fix touch handling on Android 8 */
+.android8 a,
+.android8 button {
+  touch-action: manipulation !important;
+}
+
+/* Disable problematic CSS features for Android 8 */
+.android8 .sticky,
+.android8 .fixed {
+  position: relative !important;
+}
+
+/* Fix video playback issues */
+.android8 video {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+
+/* Force hardware acceleration off for Android 8 */
+.android8 * {
+  -webkit-transform: translateZ(0) !important;
+  transform: translateZ(0) !important;
+  will-change: auto !important;
+  backface-visibility: hidden !important;
+}
+
+/* Fix image rendering issues specific to LG SmartBoard */
+.lg-smartboard img {
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* Fix Next.js image component issues on Android 8 */
+.android8
+  span[style*="box-sizing: border-box; display: block; overflow: hidden;"] {
+  display: inline-block !important;
+  overflow: visible !important;
+}
+
+/* Force z-index to prevent rendering issues on LG SmartBoard */
+.lg-smartboard .z-10,
+.lg-smartboard .z-20,
+.lg-smartboard .z-30,
+.lg-smartboard .z-40,
+.lg-smartboard .z-50 {
+  z-index: auto !important;
+}
+
+/* Fix input placeholder visibility on Android 8 */
+.android8 ::placeholder {
+  color: #888 !important;
+  opacity: 1 !important;
+}
+
+/* Specific fixes for Chromium browser on Android 8 */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .android8 {
+    /* Fix for Chromium rendering issues */
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  /* Fix for Chromium flex layout issues */
+  .android8 .flex,
+  .android8 [class*="flex-"] {
+    display: block !important;
+  }
+
+  /* Fix for Chromium form elements */
+  .android8 input[type="text"],
+  .android8 input[type="email"],
+  .android8 input[type="password"],
+  .android8 textarea {
+    -webkit-user-modify: read-write !important;
+    user-modify: read-write !important;
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+  }
+
+  /* Fix for Chromium scroll behavior */
+  .android8 * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Ensure content remains visible during printing */
+@media print {
+  .android8 * {
+    color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}

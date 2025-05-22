@@ -22,6 +22,8 @@ const Header = () => {
   const [isLimitedBrowser, setIsLimitedBrowser] = useState(false);
   const [activeItem, setActiveItem] = useState("/");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const [isInspectorOpen, setIsInspectorOpen] = useState(false);
+  const [inspectorData, setInspectorData] = useState<any>({});
 
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [1, 0.95]);
@@ -31,19 +33,29 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-    };
-
-    // Detect if we're in a limited browser environment
+    }; // Detect if we're in a limited browser environment
     const detectLimitedBrowser = () => {
-      // Check for common features that might be missing in LG Smart TV browser
+      // Check for common features that might be missing in LG Smart TV browser or SmartBoard
       const isLimited =
         typeof window !== "undefined" &&
         (!window.requestAnimationFrame ||
           !window.matchMedia ||
-          /LG|WebOS|SMART-TV/.test(navigator.userAgent) ||
-          document.documentElement.classList.contains("legacy-browser"));
+          /LG|WebOS|SMART-TV|Android 8|Android\/8|Chromium\/[5-6]/.test(
+            navigator.userAgent
+          ) ||
+          (navigator.userAgent.includes("Chrome") &&
+            /Android 8|Android\/8/.test(navigator.userAgent)) ||
+          document.documentElement.classList.contains("legacy-browser") ||
+          document.documentElement.classList.contains("limited-browser"));
 
-      setIsLimitedBrowser(isLimited);
+      // Additional detection for LG SmartBoard
+      const isLGBoard =
+        /LG|SMART-TV|WebOS|NetCast/.test(navigator.userAgent) ||
+        (/Android 8|Android\/8/.test(navigator.userAgent) &&
+          (/Chrome\/[5-7]/.test(navigator.userAgent) ||
+            /Chromium\/[5-7]/.test(navigator.userAgent)));
+
+      setIsLimitedBrowser(isLimited || isLGBoard);
     };
 
     detectLimitedBrowser();
@@ -54,9 +66,88 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleInspector = () => {
+    // Collect browser info when opening the inspector
+    if (!isInspectorOpen) {
+      const data = {
+        userAgent: navigator.userAgent,
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        },
+        screen: {
+          width: window.screen.width,
+          height: window.screen.height,
+        },
+        document: {
+          documentElement: {
+            clientWidth: document.documentElement.clientWidth,
+            clientHeight: document.documentElement.clientHeight,
+          },
+          body: {
+            clientWidth: document.body.clientWidth,
+            clientHeight: document.body.clientHeight,
+          },
+        },
+        url: window.location.href,
+        protocol: window.location.protocol,
+        host: window.location.host,
+        path: window.location.pathname,
+        features: {
+          requestAnimationFrame:
+            typeof window.requestAnimationFrame === "function",
+          matchMedia: typeof window.matchMedia === "function",
+          IntersectionObserver:
+            typeof window.IntersectionObserver === "function",
+          ResizeObserver: typeof window.ResizeObserver === "function",
+          fetch: typeof window.fetch === "function",
+          localStorage: (() => {
+            try {
+              return typeof window.localStorage !== "undefined";
+            } catch (e) {
+              return false;
+            }
+          })(),
+          serviceWorker: "serviceWorker" in navigator,
+          touchEvents: "ontouchstart" in window,
+          cssSupports:
+            typeof CSS !== "undefined" && typeof CSS.supports === "function",
+        },
+        css: {
+          supports: {
+            flexbox:
+              typeof CSS !== "undefined" && CSS.supports("display", "flex"),
+            grid: typeof CSS !== "undefined" && CSS.supports("display", "grid"),
+            position_sticky:
+              typeof CSS !== "undefined" && CSS.supports("position", "sticky"),
+            backdrop_filter:
+              typeof CSS !== "undefined" &&
+              CSS.supports("backdrop-filter", "blur(10px)"),
+          },
+        },
+        detection: {
+          isLimitedBrowser: isLimitedBrowser,
+          isAndroid8: /Android 8|Android\/8/.test(navigator.userAgent),
+          isChromium:
+            /Chrome\/[5-7]/.test(navigator.userAgent) ||
+            /Chromium\/[5-7]/.test(navigator.userAgent),
+          isLGSmartBoard:
+            document.documentElement.classList.contains("lg-smartboard"),
+        },
+        domInfo: {
+          bodyClasses: document.body.className,
+          htmlClasses: document.documentElement.className,
+        },
+      };
+
+      setInspectorData(data);
+    }
+
+    setIsInspectorOpen(!isInspectorOpen);
   };
 
   const navItems = [
@@ -280,8 +371,20 @@ const Header = () => {
                       </Link>
                     </motion.div>
                   </NavigationMenuItem>
-                ))}
+                ))}{" "}
               </NavigationMenuList>
+
+              {/* Inspector Button for debugging */}
+              <div className="ml-4">
+                <motion.button
+                  onClick={toggleInspector}
+                  className="px-3 py-1.5 rounded bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm font-medium border border-gray-200"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  🔍 Inspector
+                </motion.button>
+              </div>
             </NavigationMenu>
           </div>
 
@@ -366,7 +469,349 @@ const Header = () => {
                     </Link>
                   </motion.div>
                 ))}
+                {/* Mobile inspector button */}
+                <motion.div
+                  variants={mobileNavItemVariants}
+                  className="mt-4 pt-4 border-t border-gray-100"
+                >
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      toggleInspector();
+                    }}
+                    className="w-full py-3 px-4 bg-gray-100 text-gray-700 rounded-md flex items-center justify-center font-medium"
+                  >
+                    <span className="mr-2">🔍</span> Show Inspector
+                  </button>
+                </motion.div>{" "}
               </motion.nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Custom Inspector Panel */}
+        <AnimatePresence>
+          {isInspectorOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="fixed top-20 right-4 left-4 md:left-auto md:max-w-lg p-4 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-auto"
+              style={{ maxHeight: "80vh" }}
+            >
+              <div className="flex justify-between items-center mb-3 sticky top-0 bg-white pb-2 border-b">
+                <h3 className="font-bold text-gray-800">Browser Inspector</h3>
+                <button
+                  onClick={toggleInspector}
+                  className="text-gray-500 hover:text-gray-700 p-1"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="space-y-5 text-sm pb-12">
+                {/* Browser Basics */}
+                <div className="bg-gray-50 p-3 rounded-md">
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    User Agent:
+                  </h4>
+                  <p className="text-gray-600 break-all font-mono text-xs bg-white p-2 rounded border border-gray-200">
+                    {inspectorData?.userAgent || "Not available"}
+                  </p>
+                </div>
+
+                {/* Environment */}
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    Environment:
+                  </h4>
+                  <div className="grid grid-cols-2 gap-2 bg-gray-50 p-3 rounded-md">
+                    <div>
+                      <p className="text-gray-600 font-medium">
+                        Viewport Size:
+                      </p>
+                      <p className="text-gray-800">
+                        {inspectorData?.viewport?.width || 0} ×{" "}
+                        {inspectorData?.viewport?.height || 0}px
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 font-medium">Screen Size:</p>
+                      <p className="text-gray-800">
+                        {inspectorData?.screen?.width || 0} ×{" "}
+                        {inspectorData?.screen?.height || 0}px
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 font-medium">
+                        Document Element:
+                      </p>
+                      <p className="text-gray-800">
+                        {inspectorData?.document?.documentElement
+                          ?.clientWidth || 0}{" "}
+                        ×{" "}
+                        {inspectorData?.document?.documentElement
+                          ?.clientHeight || 0}
+                        px
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600 font-medium">Body Element:</p>
+                      <p className="text-gray-800">
+                        {inspectorData?.document?.body?.clientWidth || 0} ×{" "}
+                        {inspectorData?.document?.body?.clientHeight || 0}px
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* URL & Path */}
+                <div className="bg-gray-50 p-3 rounded-md">
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    Location:
+                  </h4>
+                  <table className="w-full text-xs">
+                    <tbody>
+                      <tr>
+                        <td className="py-1 pr-2 font-medium text-gray-600">
+                          URL:
+                        </td>
+                        <td className="py-1 text-gray-800 break-all">
+                          {inspectorData?.url || ""}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-1 pr-2 font-medium text-gray-600">
+                          Host:
+                        </td>
+                        <td className="py-1 text-gray-800">
+                          {inspectorData?.host || ""}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-1 pr-2 font-medium text-gray-600">
+                          Path:
+                        </td>
+                        <td className="py-1 text-gray-800">
+                          {inspectorData?.path || ""}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="py-1 pr-2 font-medium text-gray-600">
+                          Protocol:
+                        </td>
+                        <td className="py-1 text-gray-800">
+                          {inspectorData?.protocol || ""}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Feature Detection */}
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    Browser Features:
+                  </h4>
+                  <div className="bg-gray-50 p-3 rounded-md grid grid-cols-2 gap-x-4 gap-y-2">
+                    {inspectorData?.features &&
+                      Object.keys(inspectorData.features).map((feature) => (
+                        <div key={feature} className="flex items-center">
+                          <span
+                            className={`w-4 h-4 flex-shrink-0 rounded-full ${
+                              inspectorData.features[feature]
+                                ? "bg-green-500"
+                                : "bg-red-400"
+                            }`}
+                          >
+                            {inspectorData.features[feature] && (
+                              <span className="text-white flex justify-center items-center h-full text-xs">
+                                ✓
+                              </span>
+                            )}
+                          </span>
+                          <span className="ml-2 text-gray-700">{feature}</span>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+
+                {/* CSS Support */}
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    CSS Support:
+                  </h4>
+                  <div className="bg-gray-50 p-3 rounded-md">
+                    <div className="grid grid-cols-2 gap-2">
+                      {inspectorData?.css?.supports &&
+                        Object.keys(inspectorData.css.supports).map(
+                          (feature) => (
+                            <div key={feature} className="flex items-center">
+                              <span
+                                className={`w-4 h-4 flex-shrink-0 rounded-full ${
+                                  inspectorData.css.supports[feature]
+                                    ? "bg-green-500"
+                                    : "bg-red-400"
+                                }`}
+                              >
+                                {inspectorData.css.supports[feature] && (
+                                  <span className="text-white flex justify-center items-center h-full text-xs">
+                                    ✓
+                                  </span>
+                                )}
+                              </span>
+                              <span className="ml-2 text-gray-700">
+                                {feature.replace("_", " ")}
+                              </span>
+                            </div>
+                          )
+                        )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Browser Detection */}
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    Environment Detection:
+                  </h4>
+                  <div className="bg-gray-50 p-3 rounded-md">
+                    <div className="grid grid-cols-2 gap-2">
+                      {inspectorData?.detection &&
+                        Object.keys(inspectorData.detection).map((item) => (
+                          <div key={item} className="flex items-center">
+                            <span
+                              className={`w-4 h-4 flex-shrink-0 rounded-full ${
+                                inspectorData.detection[item]
+                                  ? "bg-blue-500"
+                                  : "bg-gray-300"
+                              }`}
+                            >
+                              {inspectorData.detection[item] && (
+                                <span className="text-white flex justify-center items-center h-full text-xs">
+                                  ✓
+                                </span>
+                              )}
+                            </span>
+                            <span className="ml-2 text-gray-700">{item}</span>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* DOM Classes */}
+                <div>
+                  <h4 className="font-semibold text-gray-800 mb-2">
+                    DOM Classes:
+                  </h4>
+                  <div className="bg-gray-50 p-3 rounded-md">
+                    <p className="text-gray-600 font-medium">HTML Classes:</p>
+                    <p className="text-gray-800 break-all font-mono text-xs bg-white p-2 rounded mb-2 border border-gray-200">
+                      {inspectorData?.domInfo?.htmlClasses || "None"}
+                    </p>
+                    <p className="text-gray-600 font-medium">Body Classes:</p>
+                    <p className="text-gray-800 break-all font-mono text-xs bg-white p-2 rounded border border-gray-200">
+                      {inspectorData?.domInfo?.bodyClasses || "None"}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Toggle Simulator */}
+                <div className="mt-4">
+                  <button
+                    onClick={() => {
+                      if (typeof document !== "undefined") {
+                        document.documentElement.classList.toggle(
+                          "lg-smartboard"
+                        );
+                        document.documentElement.classList.toggle(
+                          "limited-browser"
+                        );
+
+                        // Update inspector data after toggling
+                        setTimeout(() => toggleInspector(), 10);
+                        setTimeout(() => toggleInspector(), 20);
+                      }
+                    }}
+                    className="px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full mt-2"
+                  >
+                    Toggle SmartBoard Mode
+                  </button>
+                </div>
+
+                {/* Element Inspector */}
+                <div className="fixed bottom-0 left-4 right-4 md:left-auto md:max-w-lg bg-white border-t border-gray-200 p-3">
+                  <button
+                    onClick={() => {
+                      // Simple element inspector implementation
+                      if (typeof document !== "undefined") {
+                        toggleInspector(); // Close inspector panel first
+
+                        // Alert with instructions
+                        alert(
+                          "Tap on any element to see its details. Tap anywhere when done."
+                        );
+
+                        // Set up one-time click handler
+                        const handleClick = (e: MouseEvent) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+
+                          const element = e.target as HTMLElement;
+                          const rect = element.getBoundingClientRect();
+
+                          // Create element info
+                          const info = {
+                            tagName: element.tagName.toLowerCase(),
+                            id: element.id,
+                            classes: element.className,
+                            attributes: Array.from(element.attributes)
+                              .map((attr) => `${attr.name}="${attr.value}"`)
+                              .join(" "),
+                            size: `${Math.round(rect.width)}×${Math.round(
+                              rect.height
+                            )}px`,
+                            position: `(${Math.round(rect.left)}, ${Math.round(
+                              rect.top
+                            )})`,
+                            text:
+                              element.textContent?.substring(0, 100) +
+                              (element.textContent &&
+                              element.textContent.length > 100
+                                ? "..."
+                                : ""),
+                          };
+
+                          // Display info
+                          alert(
+                            `Element: ${info.tagName}\nID: ${
+                              info.id || "none"
+                            }\nClasses: ${info.classes || "none"}\nSize: ${
+                              info.size
+                            }\nPosition: ${info.position}\nText: ${
+                              info.text || "none"
+                            }`
+                          );
+
+                          // Remove click handler
+                          document.removeEventListener(
+                            "click",
+                            handleClick,
+                            true
+                          );
+                        };
+
+                        // Add click handler
+                        document.addEventListener("click", handleClick, true);
+                      }
+                    }}
+                    className="w-full py-2 bg-gray-800 text-white rounded-md font-medium"
+                  >
+                    Inspect Elements
+                  </button>
+                </div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

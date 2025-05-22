@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import ContactForm from "@/components/ContactForm";
+import SimplifiedContactForm from "@/components/SimplifiedContactForm";
 
 const EvaluationPage = () => {
   const { scrollY } = useScroll();
@@ -43,21 +44,32 @@ const EvaluationPage = () => {
       transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
     },
   };
-
   // Detect limited browsers on component mount
   useEffect(() => {
     const detectLimitedBrowser = () => {
-      // Check for common features that might be missing in LG Smart TV browser
+      // Check for common features that might be missing in LG Smart TV browser or SmartBoard
       const isLimited =
         typeof window !== "undefined" &&
         (!window.requestAnimationFrame ||
           !window.matchMedia ||
-          /LG|WebOS|SMART-TV/.test(navigator.userAgent) ||
-          document.documentElement.classList.contains("legacy-browser"));
+          /LG|WebOS|SMART-TV|Android 8|Android\/8|Chromium\/[5-6]/.test(
+            navigator.userAgent
+          ) ||
+          (navigator.userAgent.includes("Chrome") &&
+            /Android 8|Android\/8/.test(navigator.userAgent)) ||
+          document.documentElement.classList.contains("legacy-browser") ||
+          document.documentElement.classList.contains("limited-browser"));
 
-      setIsLimitedBrowser(isLimited);
+      // Additional detection for LG SmartBoard
+      const isLGBoard =
+        /LG|SMART-TV|WebOS|NetCast/.test(navigator.userAgent) ||
+        (/Android 8|Android\/8/.test(navigator.userAgent) &&
+          (/Chrome\/[5-7]/.test(navigator.userAgent) ||
+            /Chromium\/[5-7]/.test(navigator.userAgent)));
 
-      if (isLimited) {
+      setIsLimitedBrowser(isLimited || isLGBoard);
+
+      if (isLimited || isLGBoard) {
         // Add a class to body for potential CSS fallbacks
         document.body.classList.add("limited-browser");
       }
@@ -148,7 +160,7 @@ const EvaluationPage = () => {
               Get detailed feedback from our IELTS experts to improve your
               score. Simply complete the payment and submit your writing below.
             </p>
-            <ContactForm />
+            <SimplifiedContactForm />
           </div>
         </section>
       </main>
@@ -428,8 +440,7 @@ const EvaluationPage = () => {
               Get detailed feedback from our IELTS experts to improve your
               score. Simply complete the payment and submit your writing below.
             </motion.p>
-          </div>
-
+          </div>{" "}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
